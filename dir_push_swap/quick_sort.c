@@ -178,12 +178,13 @@ else
 	ft_putendl("STACK_A");
 ft_stack_print(*opposite_stack);
 	new_size = 0;
+	median = 0;
 	if (size > 3)
 	{
 		median = (size / 2) + ((size % 2 == 1) ? 1 : 0); // pas une mediane, revoir. Il s'agit seulement de la moitie.
 		reste = size - median;
 		i = 0;
-		while (new_size < median)
+		while (new_size < median) // NON : Trouver les 'median' min ou max values
 		{
 			if (state == 0 && (*stack)->nb <= median)
 			{
@@ -191,7 +192,7 @@ ft_stack_print(*opposite_stack);
 				ft_stack_push_back(instruct_set, ft_stack_new(10));
 				new_size++;
 			}
-			else if (state == -1 && (*stack)->nb >= median)
+			else if (state == -1 && (*stack)->nb >= median) // > ou >= ??
 			{
 				ft_push_stack(stack, opposite_stack);
 				ft_stack_push_back(instruct_set, ft_stack_new(9));
@@ -237,9 +238,9 @@ if (state == 0)
 	ft_putendl("STACK_B");
 else
 	ft_putendl("STACK_A");
-ft_stack_print(*stack);
+ft_stack_print(*opposite_stack);
 
-	ft_stack_sort(stack, (new_size > 3) ? reste : new_size, state, instruct_set);
+	ft_stack_sort(stack, size - median, state, instruct_set);
 
 ft_printf("\n\nSTATE of STACKS after sort\n", debug, size);
 if (state == 0)
