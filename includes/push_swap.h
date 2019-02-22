@@ -19,13 +19,23 @@
 
 # define INSTRUCTIONS_SET	11
 
-void		ft_push_stack(t_stack **leave, t_stack **receive);
-t_stack		*ft_check_args_and_build_stack(char **argv);
-t_stack		*ft_read_stdin(void);
-int			ft_start_instructions(t_stack **stack_a,
-					t_stack *instructions_set);
-t_stack		*ft_dumb_sort(t_stack **stack_a, unsigned int size);
-t_stack		*ft_quick_sort(t_stack **stack_a, unsigned int size);
-int			ft_stack_append(char *str, t_stack **stack_a);
+typedef struct	s_data
+{
+	unsigned int	size;
+	unsigned int	reste;
+	int				state;
+	int				depth;
+}				t_data;
+
+t_data			*init_data(unsigned int size);
+void			ft_push_stack(t_stack **leave, t_stack **receive);
+t_stack			*ft_check_args_and_build_stack(char **argv);
+t_stack			*ft_read_stdin(void);
+int				ft_start_instructions(t_stack **stack_a,
+						t_stack *instructions_set);
+t_stack			*ft_dumb_sort(t_stack **stack_a, unsigned int size);
+t_stack			*ft_quick_sort(t_stack **stack_a, unsigned int size);
+t_stack			*ft_quick_sortv2(t_stack **stack_a, unsigned int size);
+int				ft_stack_append(char *str, t_stack **stack_a);
 
 #endif

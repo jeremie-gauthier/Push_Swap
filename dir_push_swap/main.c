@@ -93,12 +93,11 @@ int		main(int argc, char **argv)
 		if (!(stack_a = ft_check_args_and_build_stack(argv)))
 			return (ft_clean_abort(NULL, 1, 1));
 		if (ft_stack_is_sort(stack_a, 0))
-		{
-			ft_stack_del(&stack_a);
-			return (0);
-		}
+			return (ft_clean_abort(&stack_a, 0, 0));
 	// instruct_set = ft_dumb_sort(&stack_a, ft_stack_size(stack_a));
-	instruct_set = ft_quick_sort(&stack_a, ft_stack_size(stack_a));
+		if (!(instruct_set = ft_quick_sortv2(&stack_a, ft_stack_size(stack_a))))
+			return (ft_clean_abort(&stack_a, 1, 1));
+		
 		ft_print_instructions(instruct_set);
 		// ft_stack_print(instruct_set);
 		// ft_printf("STACK A\n");

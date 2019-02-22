@@ -86,13 +86,19 @@ static int		append_str(const char **format, t_buf *buf, int nxt_kwd)
 int				parse_format(const char **format, t_buf *buf)
 {
 	int		nxt_kwd;
-	char	*nxt;
+	char	*nxt_conv;
+	char	*nxt_col;
 
-	nxt = ft_strpbrk(*format, "%{");
-	if (nxt == NULL)
+	nxt_conv = ft_strchr(*format, '%');
+	nxt_col = ft_strchr(*format, '{');
+	if (nxt_col == NULL && nxt_conv == NULL)
 		nxt_kwd = 0;
+	else if (nxt_col && nxt_conv == NULL)
+		nxt_kwd = nxt_col - *format;
+	else if (nxt_col == NULL && nxt_conv)
+		nxt_kwd = nxt_conv - *format;
 	else
-		nxt_kwd = nxt - *format;
+		nxt_kwd = ((nxt_col < nxt_conv) ? nxt_col : nxt_conv) - *format;
 	if (buf->str == NULL)
 		return (create_str(format, buf, nxt_kwd));
 	return (append_str(format, buf, nxt_kwd));
