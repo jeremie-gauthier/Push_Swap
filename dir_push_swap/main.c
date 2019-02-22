@@ -92,7 +92,7 @@ int		main(int argc, char **argv)
 
 		if (!(stack_a = ft_check_args_and_build_stack(argv)))
 			return (ft_clean_abort(NULL, 1, 1));
-		if (ft_stack_is_sort(stack_a, ft_stack_size(stack_a)))
+		if (ft_stack_is_sort(stack_a, 0))
 		{
 			ft_stack_del(&stack_a);
 			return (0);

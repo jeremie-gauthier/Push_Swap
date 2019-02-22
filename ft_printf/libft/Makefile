@@ -133,7 +133,9 @@ SRCS	=	ft_memset.c		\
 			ft_stack_duplicate.c	\
 			ft_stack_is_sort.c	\
 			ft_stack_is_nsort.c	\
-			ft_arrlen.c
+			ft_stack_cmp.c	\
+			ft_arrlen.c	\
+			ft_nb_is_lower.c
 
 OBJS	=	$(SRCS:.c=.o)
 

@@ -32,7 +32,7 @@ int			main(int argc, char **argv)
 		argv++;
 		if (!(stack_a = ft_check_args_and_build_stack(argv)))
 			return (ft_clean_abort(NULL, NULL, 1, 1));
-		if (ft_stack_is_sort(stack_a, ft_stack_size(stack_a)))
+		if (ft_stack_is_sort(stack_a, 0))
 		{
 			write(1, "OK\n", 3);
 			ft_stack_del(&stack_a);

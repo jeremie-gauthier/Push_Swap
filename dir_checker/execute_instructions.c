@@ -20,7 +20,7 @@ static int	ft_final_state_check(t_stack *stack_a, t_stack *stack_b)
 		write(1, "KO\n", 3);
 		return (0);
 	}
-	if (!(ft_stack_is_sort(stack_a, ft_stack_size(stack_a))))
+	if (!(ft_stack_is_sort(stack_a, 0)))
 	{
 		write(1, "KO\n", 3);
 		return (0);
