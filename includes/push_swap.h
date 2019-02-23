@@ -18,6 +18,8 @@
 # include "../ft_printf/ft_printf/ft_printf.h"
 
 # define INSTRUCTIONS_SET	11
+# define DEBUG	0
+# define SHOW_NB	0
 
 typedef struct	s_data
 {

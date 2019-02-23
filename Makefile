@@ -36,7 +36,7 @@ SRCS_P1	=	$(addprefix $(CHKR_PATH)/,$(SOURCES_P1))
 OBJS_P1	=	$(addprefix $(DIR_O_P1)/,$(SOURCES_P1:.c=.o))
 
 SOURCES_P2	=	main.c	\
-				stack_op.c	\
+				stack_operations.c	\
 				check_args.c	\
 				dumb_sort.c	\
 				quick_sort.c	\

@@ -27,6 +27,7 @@ int		ft_print_instructions(t_stack *instruct_set)
 
 	if (!(ret = (char*)malloc(sizeof(*ret) * (ft_stack_size(instruct_set) * 3) + 1)))
 		return (0);
+	// ft_printf("ret addr : %p\n", &ret);
 	i = 0;
 	while (instruct_set)
 	{
@@ -74,7 +75,11 @@ int		ft_print_instructions(t_stack *instruct_set)
 	}
 	ret[i] = '\0';
 	ft_putstr(ret);
+	// ft_printf("ret addr : %p\n", &ret);
+	// ft_printf("%s\n", ret);
+	// ft_printf("Hello from the otter side\n");
 	ft_strdel(&ret);
+	// free(ret);
 	return (1);
 }
 
@@ -94,14 +99,13 @@ int		main(int argc, char **argv)
 			return (ft_clean_abort(NULL, 1, 1));
 		if (ft_stack_is_sort(stack_a, 0))
 			return (ft_clean_abort(&stack_a, 0, 0));
+		// ft_putendl("\n\nORIGINAL STACK");
+		// ft_stack_print(stack_a);
 	// instruct_set = ft_dumb_sort(&stack_a, ft_stack_size(stack_a));
 		if (!(instruct_set = ft_quick_sortv2(&stack_a, ft_stack_size(stack_a))))
 			return (ft_clean_abort(&stack_a, 1, 1));
 		
 		ft_print_instructions(instruct_set);
-		// ft_stack_print(instruct_set);
-		// ft_printf("STACK A\n");
-		// ft_stack_print(stack_a);
 
 		ft_stack_del(&stack_a);
 		ft_stack_del(&instruct_set);
