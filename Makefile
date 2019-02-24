@@ -30,7 +30,8 @@ SOURCES_P1	=	main.c	\
 				stack_operations.c	\
 				check_args.c	\
 				read_stdin.c	\
-				execute_instructions.c
+				execute_instructions.c	\
+				memory.c
 
 SRCS_P1	=	$(addprefix $(CHKR_PATH)/,$(SOURCES_P1))
 OBJS_P1	=	$(addprefix $(DIR_O_P1)/,$(SOURCES_P1:.c=.o))

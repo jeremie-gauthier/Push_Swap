@@ -25,6 +25,12 @@
 # define DEBUG	0
 # define SHOW_NB	0
 
+typedef struct	s_options
+{
+	unsigned short	visu	: 1;
+	unsigned short	count	: 1;
+}				t_options;
+
 typedef struct	s_data
 {
 	unsigned int	size;
@@ -34,8 +40,9 @@ typedef struct	s_data
 }				t_data;
 
 t_data			*init_data(unsigned int size);
+t_options		*init_options(void);
 void			ft_push_stack(t_stack **leave, t_stack **receive);
-t_stack			*ft_check_args_and_build_stack(char **argv);
+t_stack			*ft_check_args_and_build_stack(t_options *fl, char **argv);
 t_stack			*ft_read_stdin(void);
 int				ft_start_instructions(t_stack **stack_a,
 						t_stack *instructions_set);

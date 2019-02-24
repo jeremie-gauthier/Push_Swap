@@ -12,3 +12,15 @@ t_data	*init_data(unsigned int size)
 	new->depth = 0;
 	return (new);
 }
+
+t_options	*init_options(void)
+{
+	t_options	*new;
+		return (NULL);
+
+	if (!(new = (t_options*)malloc(sizeof(new))))
+		return (NULL);
+	new->visu = 0;
+	new->count = 0;
+	return (new);
+}

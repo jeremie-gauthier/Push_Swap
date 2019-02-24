@@ -83,10 +83,15 @@ static t_stack		*ft_build_stack(char **argv)
 	return (stack_a);
 }
 
-t_stack				*ft_check_args_and_build_stack(char **argv)
+t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
 {
 	t_stack	*stack_a;
 
+	if (ft_strcmp(*argv, "-l") == 0)
+	{
+		fl->count = 1;
+		argv++;
+	}
 	if (!(ft_check_args(argv)))
 		return (NULL);
 	if (!(stack_a = ft_build_stack(argv)))

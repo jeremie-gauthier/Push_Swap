@@ -12,11 +12,14 @@
 
 #include "../includes/push_swap.h"
 
-static int	ft_clean_abort(t_stack **stack_a, int msg, int ret)
+static int	ft_clean_abort(t_stack **stack_a, t_options **fl, int msg, int ret)
 {
 	if (msg == 1)
-		write(2, "Error\n", 6);
+		ft_dprintf(2, "{red}Error\n{reset}");
+	if (msg == 2)
+		ft_dprintf(2, "{red}[!] Failed to malloc.\n{reset}");
 	ft_stack_del(stack_a);
+	ft_memdel((void*)fl);
 	return (ret);
 }
 
@@ -27,7 +30,6 @@ int		ft_print_instructions(t_stack *instruct_set)
 
 	if (!(ret = (char*)malloc(sizeof(*ret) * (ft_stack_size(instruct_set) * 3) + 1)))
 		return (0);
-	// ft_printf("ret addr : %p\n", &ret);
 	i = 0;
 	while (instruct_set)
 	{
@@ -87,27 +89,30 @@ int		main(int argc, char **argv)
 {
 	t_stack	*stack_a;
 	t_stack	*instruct_set;
+	t_options	*fl;
 
 	instruct_set = NULL;
 	if (argc >= 2)
 	{
 		argv++;
-		// if (argc == 2) //parser la string strsplit
-		//dans tous les cas ?? ou juste argc =2
-
-		if (!(stack_a = ft_check_args_and_build_stack(argv)))
-			return (ft_clean_abort(NULL, 1, 1));
+		if (!(fl = init_options()))
+			return (ft_clean_abort(NULL, NULL, 2, 1));
+		if (!(stack_a = ft_check_args_and_build_stack(fl, argv)))
+			return (ft_clean_abort(NULL, &fl, 1, 1));
 		if (ft_stack_is_sort(stack_a, 0))
-			return (ft_clean_abort(&stack_a, 0, 0));
+			return (ft_clean_abort(&stack_a, &fl, 0, 0));
 		// ft_putendl("\n\nORIGINAL STACK");
 		// ft_stack_print(stack_a);
 	// instruct_set = ft_dumb_sort(&stack_a, ft_stack_size(stack_a));
 		if (!(instruct_set = ft_quick_sortv2(&stack_a, ft_stack_size(stack_a))))
-			return (ft_clean_abort(&stack_a, 1, 1));
+			return (ft_clean_abort(&stack_a, &fl, 1, 1));
 		
 		ft_print_instructions(instruct_set);
-		
-
+		// if (fl->count == 1)
+		// {
+		// 	ft_printf("{green}%i\n{reset}", ft_stack_size(instruct_set));
+		// }
+		ft_memdel((void*)&fl);
 		ft_stack_del(&stack_a);
 		ft_stack_del(&instruct_set);
 	}
