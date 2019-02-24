@@ -106,6 +106,7 @@ int		main(int argc, char **argv)
 			return (ft_clean_abort(&stack_a, 1, 1));
 		
 		ft_print_instructions(instruct_set);
+		
 
 		ft_stack_del(&stack_a);
 		ft_stack_del(&instruct_set);
