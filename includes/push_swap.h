@@ -31,6 +31,7 @@ typedef struct	s_options
 	unsigned short	count	: 1;
 }				t_options;
 
+// useless now
 typedef struct	s_data
 {
 	unsigned int	size;
@@ -38,26 +39,30 @@ typedef struct	s_data
 	int				state;
 	int				depth;
 }				t_data;
+///
 
 typedef struct	s_st
 {
-	t_stack		*st_a;
-	t_stack		*st_b;
-	t_stack		*st_instruct;
-	t_options	*fl;
+	t_stack			*st_a;
+	t_stack			*st_b;
+	t_stack			*st_instruct;
+	t_options		*opt_fl;
+	unsigned int	depth	: 5;
+	unsigned int	sorted	: 1;
 }				t_st;
 
-
-t_data			*init_data(unsigned int size);
+t_data			*init_data(unsigned int size); //
 t_options		*init_options(void);
+t_st			*init_stacks(void);
+void			st_del(t_st **lst);
 void			ft_push_stack(t_stack **leave, t_stack **receive);
 t_stack			*ft_check_args_and_build_stack(t_options *fl, char **argv);
 t_stack			*ft_read_stdin(void);
 int				ft_start_instructions(t_stack **stack_a,
 						t_stack *instructions_set);
-t_stack			*ft_dumb_sort(t_stack **stack_a, unsigned int size);
+int				ft_dumb_sort(t_st *lst, unsigned int size);
 t_stack			*ft_quick_sort(t_stack **stack_a, unsigned int size);
-t_stack			*ft_quick_sortv2(t_stack **stack_a, unsigned int size);
+int				ft_quick_sortv2(t_st *lst, unsigned int size);
 int				ft_stack_append(char *str, t_stack **stack_a);
 
 #endif

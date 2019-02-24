@@ -468,23 +468,55 @@ static int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, i
 	return (1);
 }
 
-static void	ft_st_split(t_stack **st, t_stack **opp_st, t_stack **instr_set, unsigned int size, int state, int fd)
+// static int	ft_choose_pivot(t_stack **st, t_st **lst, unsigned int *size, int state, int fd)
+// {
+// 	int		max;
+// 	while (state == 0 && (*st)->nb == ft_stack_nmin(*st, *size))
+// 	{
+// 		ft_stack_rotate(st);
+// 		ft_stack_push_back(&(*lst)->st_instruct, ft_stack_new(3));
+// 		(*size)--;
+// 		(*lst)->sorted = 1;
+// 	}
+// 	max = ft_stack_nmax(*st, *size);
+// 	ft_dprintf(fd, "max = %i\n", max);
+// 	if (*size > 1)
+// 	{
+// 		if ((*st)->next && (*st)->nb == max)
+// 			return ((*st)->next->nb);
+// 	}
+// 	return ((*st)->nb);	
+// }
+
+static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 {
 	int				pivot;
 	unsigned int	rotations;
 	unsigned int	pushs;
+	t_stack			**st;
+	t_stack			**opp_st;
 
+	st = (state == 0) ? &lst->st_a : &lst->st_b;
+	opp_st = (state == 0) ? &lst->st_b : &lst->st_a;
 	if (DEBUG)
 		ft_dprintf(fd, "\n{red}-----NEW RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
 	while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
 	{
 		if (DEBUG)
 			ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
+		// pivot = ft_choose_pivot(st, &lst, &size, state, fd);
 		pivot = (*st)->nb;
 		rotations = 0;
 		pushs = 0;
+		if ((*st)->nb != pivot)
+		{
+			ft_stack_rotate(st);
+			ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
+			rotations++;
+			size--;
+		}
 		ft_push_stack(st, opp_st);
-		ft_stack_push_back(instr_set, ft_stack_new((state == 0) ? 10 : 9));
+		ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
 		size--;
 		pushs++;
 		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
@@ -492,27 +524,32 @@ static void	ft_st_split(t_stack **st, t_stack **opp_st, t_stack **instr_set, uns
 			if ((*st)->nb < pivot)
 			{
 				ft_push_stack(st, opp_st);
-				ft_stack_push_back(instr_set, ft_stack_new((state == 0) ? 10 : 9));
+				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
 				size--;
 				pushs++;
 			}
 			else
 			{
 				ft_stack_rotate(st);
-				ft_stack_push_back(instr_set, ft_stack_new((state == 0) ? 3 : 4));
+				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
 				rotations++;
 				size--;
 			}
 		}
 		size += rotations;
+		if (lst->sorted == 0)
+			lst->sorted = 1;
 		// if (state == 0)
 		// {
+		else
+		{
 			while (rotations)
 			{
 				ft_stack_rev_rotate(st);
-				ft_stack_push_back(instr_set, ft_stack_new((state == 0) ? 6 : 7));
+				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 6 : 7));
 				rotations--;
 			}
+		}
 		// }
 		if (DEBUG)
 		{
@@ -521,23 +558,13 @@ static void	ft_st_split(t_stack **st, t_stack **opp_st, t_stack **instr_set, uns
 			ft_dprintf(fd, "STATE STACK B\n");
 			ft_stack_print_fd(fd, (state == 0) ? *opp_st : *st);
 		}
-		ft_st_split(opp_st, st, instr_set, pushs, ~state, fd);
+		ft_st_split(lst, pushs, ~state, fd);
 		if (DEBUG)
 			ft_dprintf(fd, "{green}-----RETURN TO HIGHER RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
 	}
 	if (DEBUG)
 		ft_dprintf(fd, "{yellow}>>>>>SORT SEQUENCE<<<<<{reset}\n");
-	ft_sort_substack(st, opp_st, size, state, instr_set, fd);
-	// if (state == 0)
-	// 	ft_back_to_stack_a(st, opp_st, size, instr_set);
-	// else
-	// 	ft_back_to_stack_a(opp_st, st, size, instr_set);
-	// while (size)
-	// {
-	// 	ft_stack_rotate(st);
-	// 	ft_stack_push_back(instr_set, ft_stack_new(3));
-	// 	size--;
-	// }
+	ft_sort_substack(st, opp_st, size, state, &lst->st_instruct, fd);
 	if (DEBUG)
 	{
 		ft_dprintf(fd, "{cyan}STATE STACK A\n");
@@ -548,30 +575,22 @@ static void	ft_st_split(t_stack **st, t_stack **opp_st, t_stack **instr_set, uns
 	}
 }
 
-t_stack		*ft_quick_sortv2(t_stack **stack_a, unsigned int size)
+int		ft_quick_sortv2(t_st *lst, unsigned int size)
 {
-	t_stack	*instr_set;
-	t_stack	*stack_b;
-
 int	fd;
-fd = open("log.txt", O_WRONLY);
-	instr_set = NULL;
-	stack_b = NULL;
-	// ft_stack_split(size, stack_a, &stack_b, 0, &instr_set, 0);
-	// ft_st_split(stack_a, &stack_b, &instr_set, datas, 0);
+fd = open("log.txt", O_CREAT | O_WRONLY, S_IRWXU);
 	if (DEBUG || SHOW_NB)
 	{
-		// ft_putendl_fd("\n\nORIGINAL STACK", fd);
 		ft_dprintf(fd, "-----ORIGINAL STACK-----\n");
-		ft_stack_print_fd(fd, *stack_a);
+		ft_stack_print_fd(fd, lst->st_a);
 	}
-	ft_st_split(stack_a, &stack_b, &instr_set, size, 0, fd);
+	ft_st_split(lst, size, 0, fd);
 	if (DEBUG || SHOW_NB)
 	{
 		ft_dprintf(fd, "\n\n-----FINAL RESULT-----\n");
 		// ft_putendl("\n\nFINAL RESULT");
-		ft_stack_print_fd(fd, *stack_a);
+		ft_stack_print_fd(fd, lst->st_a);
 	}
 close(fd);
-	return (instr_set);
+	return (1);
 }
