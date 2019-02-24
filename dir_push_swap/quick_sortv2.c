@@ -12,6 +12,24 @@ static void	ft_stack_print_fd(int fd, t_stack *current)
 	}
 }
 
+static int	change_last_instruction(t_stack *instr_set, int supposed_val, int new_val)
+{
+	t_stack	*current;
+
+	current = instr_set;
+	if (current)
+	{
+		while (current->next)
+			current = current->next;
+		if (current->nb == supposed_val)
+		{
+			current->nb = new_val;
+			return (1);
+		}
+	}
+	return (0);
+}
+
 static int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, int state, t_stack **instr_set, int fd)
 {
 	t_stack	*new;
@@ -35,14 +53,22 @@ static int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, i
 	{
 		if (state == -1)
 		{
-			ft_push_stack(st, opp_st);
-			if (!(new = ft_stack_new(9)))
-				return (0);
-			ft_stack_push_back(instr_set, new);
-			ft_stack_rotate(opp_st);
-			if (!(new = ft_stack_new(3)))
-				return (0);
-			ft_stack_push_back(instr_set, new);
+			if (change_last_instruction(*instr_set, 10, 3) == 1)
+			{
+				ft_push_stack(st, opp_st);
+				ft_stack_rotate(opp_st);
+			}
+			else
+			{
+				ft_push_stack(st, opp_st);
+				if (!(new = ft_stack_new(9)))
+					return (0);
+				ft_stack_push_back(instr_set, new);
+				ft_stack_rotate(opp_st);
+				if (!(new = ft_stack_new(3)))
+					return (0);
+				ft_stack_push_back(instr_set, new);
+			}
 		}
 		else
 		{

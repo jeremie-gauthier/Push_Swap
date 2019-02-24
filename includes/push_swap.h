@@ -39,6 +39,15 @@ typedef struct	s_data
 	int				depth;
 }				t_data;
 
+typedef struct	s_st
+{
+	t_stack		*st_a;
+	t_stack		*st_b;
+	t_stack		*st_instruct;
+	t_options	*fl;
+}				t_st;
+
+
 t_data			*init_data(unsigned int size);
 t_options		*init_options(void);
 void			ft_push_stack(t_stack **leave, t_stack **receive);

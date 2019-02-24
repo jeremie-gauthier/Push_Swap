@@ -16,7 +16,6 @@ t_data	*init_data(unsigned int size)
 t_options	*init_options(void)
 {
 	t_options	*new;
-		return (NULL);
 
 	if (!(new = (t_options*)malloc(sizeof(new))))
 		return (NULL);
