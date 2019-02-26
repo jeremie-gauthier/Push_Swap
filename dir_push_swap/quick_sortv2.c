@@ -6,7 +6,8 @@ static void	ft_stack_print_fd(int fd, t_stack *current)
 	{
 		while (current)
 		{
-            ft_dprintf(fd, "%i\n", current->nb);
+			ft_putnbr_fd(current->nb, fd);
+			ft_putchar_fd('\n', fd);
 			current = current->next;
 		}
 	}
@@ -495,9 +496,13 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 	unsigned int	pushs;
 	t_stack			**st;
 	t_stack			**opp_st;
+//essai implementation opti 3
+int				min;
 
 	st = (state == 0) ? &lst->st_a : &lst->st_b;
 	opp_st = (state == 0) ? &lst->st_b : &lst->st_a;
+//essai implementation opti 3
+min = ft_stack_nmin(*st, size);
 	if (DEBUG)
 		ft_dprintf(fd, "\n{red}-----NEW RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
 	while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
@@ -508,6 +513,13 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 		pivot = (*st)->nb;
 		rotations = 0;
 		pushs = 0;
+//essai implementation opti 3
+if (state == 0 && (*st)->nb == min && rotations == 0)
+{
+	ft_stack_rotate(st);
+	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
+	size--;			
+}
 		if ((*st)->nb != pivot)
 		{
 			ft_stack_rotate(st);

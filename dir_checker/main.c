@@ -38,6 +38,7 @@ int			main(int argc, char **argv)
 			return (ft_clean_abort(NULL, NULL, NULL, 2, 1));
 		if (!(stack_a = ft_check_args_and_build_stack(fl, argv)))
 			return (ft_clean_abort(NULL, NULL, &fl, 1, 1));
+		// ft_stack_print(stack_a);
 		if (ft_stack_is_sort(stack_a, 0))
 		{
 			write(1, "OK\n", 3);

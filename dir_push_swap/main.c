@@ -22,19 +22,21 @@ static int	ft_clean_abort(t_st **lst, int msg, int ret)
 	return (ret);
 }
 
-int		ft_print_instructions(t_stack *instruct_set, unsigned int size)
+int		ft_print_instructions(t_stack *instruct_set)
 {
 	char	*ret;
 	size_t	i;
 
-	ft_printf("st_size = %u\nsize = %u\ndebut---\n", ft_stack_size(instruct_set), size);
-	ft_stack_print(instruct_set);
-	ft_printf("---fin\n");
-	if (!(ret = (char*)ft_memalloc(ft_stack_size(instruct_set) * 3 + 1)))
+	// ft_printf("st_size = %u\nsize = %u\ndebut---\n", ft_stack_size(instruct_set), size);
+	// ft_stack_print(instruct_set);
+	// ft_printf("---fin\n");
+	if (!(ret = (char*)malloc(sizeof(*ret)
+					* (ft_stack_size(instruct_set) * 4) + 1)))
 		return (0);
 	i = 0;
 	while (instruct_set)
 	{
+		// ft_printf("hi\n");
 		if (instruct_set->nb >= 0 && instruct_set->nb <= 2)
 		{
 			ret[i++] = 's';
@@ -44,6 +46,7 @@ int		ft_print_instructions(t_stack *instruct_set, unsigned int size)
 				ret[i++] = 'b';
 			else
 				ret[i++] = 's';
+			// ft_printf("galere 1\n");
 		}
 		else if (instruct_set->nb >= 3 && instruct_set->nb <= 5)
 		{
@@ -54,6 +57,7 @@ int		ft_print_instructions(t_stack *instruct_set, unsigned int size)
 				ret[i++] = 'b';
 			else
 				ret[i++] = 'r';
+			// ft_printf("galere 2\n");
 		}
 		else if (instruct_set->nb >= 6 && instruct_set->nb <= 8)
 		{
@@ -65,6 +69,7 @@ int		ft_print_instructions(t_stack *instruct_set, unsigned int size)
 				ret[i++] = 'b';
 			else
 				ret[i++] = 'r';
+			// ft_printf("galere 3\n");
 		}
 		else
 		{
@@ -73,8 +78,10 @@ int		ft_print_instructions(t_stack *instruct_set, unsigned int size)
 				ret[i++] = 'a';
 			else
 				ret[i++] = 'b';
+			// ft_printf("galere 4\n");
 		}
 		ret[i++] = '\n';
+		// ft_printf("galere bonus\n");
 		instruct_set = instruct_set->next;
 	}
 	ret[i] = '\0';
@@ -114,14 +121,14 @@ int		main(int argc, char **argv)
 			if (!(ft_quick_sortv2(lst, size)))
 				return (ft_clean_abort(&lst, 1, 1));
 		}
-		size = ft_stack_size(lst->st_instruct);
-		ft_print_instructions(lst->st_instruct, size);
+		ft_print_instructions(lst->st_instruct);
 		// if (fl->count == 1)
 		// {
 		// 	ft_printf("{green}%i\n{reset}", ft_stack_size(instruct_set));
 		// }
 		// ft_printf("avant del lst\n");
 		st_del(&lst);
+		
 		// ft_printf("apres del lst\n");
 	}
 	return (0);
