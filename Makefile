@@ -42,7 +42,8 @@ SOURCES_P2	=	main.c	\
 				dumb_sort.c	\
 				quick_sort.c	\
 				memory.c	\
-				quick_sortv2.c
+				quick_sortv2.c	\
+				insertion_sort.c
 
 HDR		=	$(HDR_PATH)/push_swap.h
 
@@ -51,7 +52,7 @@ OBJS_P2	=	$(addprefix $(DIR_O_P2)/,$(SOURCES_P2:.c=.o))
 
 CC		=	gcc
 
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -g3
 
 RM		=	rm -f
 

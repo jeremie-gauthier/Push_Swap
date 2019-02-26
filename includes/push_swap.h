@@ -63,6 +63,7 @@ int				ft_start_instructions(t_stack **stack_a,
 int				ft_dumb_sort(t_st *lst, unsigned int size);
 t_stack			*ft_quick_sort(t_stack **stack_a, unsigned int size);
 int				ft_quick_sortv2(t_st *lst, unsigned int size);
+int    			ft_insertion_sort(t_st *lst, unsigned int size);
 int				ft_stack_append(char *str, t_stack **stack_a);
 
 #endif

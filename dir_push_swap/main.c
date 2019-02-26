@@ -22,12 +22,15 @@ static int	ft_clean_abort(t_st **lst, int msg, int ret)
 	return (ret);
 }
 
-int		ft_print_instructions(t_stack *instruct_set)
+int		ft_print_instructions(t_stack *instruct_set, unsigned int size)
 {
 	char	*ret;
 	size_t	i;
 
-	if (!(ret = (char*)malloc(sizeof(*ret) * (ft_stack_size(instruct_set) * 3) + 1)))
+	ft_printf("st_size = %u\nsize = %u\ndebut---\n", ft_stack_size(instruct_set), size);
+	ft_stack_print(instruct_set);
+	ft_printf("---fin\n");
+	if (!(ret = (char*)ft_memalloc(ft_stack_size(instruct_set) * 3 + 1)))
 		return (0);
 	i = 0;
 	while (instruct_set)
@@ -79,7 +82,9 @@ int		ft_print_instructions(t_stack *instruct_set)
 	// ft_printf("ret addr : %p\n", &ret);
 	// ft_printf("%s\n", ret);
 	// ft_printf("Hello from the otter side\n");
+	// ft_printf("avant del ret\n");
 	ft_strdel(&ret);
+	// ft_printf("apres del ret\n");
 	// free(ret);
 	return (1);
 }
@@ -99,23 +104,25 @@ int		main(int argc, char **argv)
 		if (ft_stack_is_sort(lst->st_a, 0))
 			return (ft_clean_abort(&lst, 0, 0));
 		size = ft_stack_size(lst->st_a);
-		// if (size < 5)
-		// {
-		// 	if (!(ft_dumb_sort(lst, size)))
-		// 		return (ft_clean_abort(&lst, 1, 1));
-		// }
-		// else
-		// {
+		if (size > 3 && size < 6)
+		{
+			if (!(ft_insertion_sort(lst, size)))
+				return (ft_clean_abort(&lst, 1, 1));
+		}
+		else
+		{
 			if (!(ft_quick_sortv2(lst, size)))
 				return (ft_clean_abort(&lst, 1, 1));
-		// }
-		
-		ft_print_instructions(lst->st_instruct);
+		}
+		size = ft_stack_size(lst->st_instruct);
+		ft_print_instructions(lst->st_instruct, size);
 		// if (fl->count == 1)
 		// {
 		// 	ft_printf("{green}%i\n{reset}", ft_stack_size(instruct_set));
 		// }
+		// ft_printf("avant del lst\n");
 		st_del(&lst);
+		// ft_printf("apres del lst\n");
 	}
 	return (0);
 }

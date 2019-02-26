@@ -17,10 +17,13 @@ unsigned int	ft_stack_size(t_stack *head)
 	unsigned int	size;
 
 	size = 0;
-	while (head)
+	if (head != NULL)
 	{
-		head = head->next;
-		size++;
+		while (head)
+		{
+			head = head->next;
+			size++;
+		}
 	}
 	return (size);
 }

@@ -5,6 +5,7 @@ ERR=0
 for i in range {1..99}
 	do 
 		ARG=`ruby -e "puts (0..4).to_a.shuffle.join(' ')"`
+		echo $ARG
 		RET=`./push_swap $ARG | ./checker $ARG`
 		if [ "$RET" != "OK" ];
 			then
