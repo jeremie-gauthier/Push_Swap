@@ -53,7 +53,7 @@ OBJS_P2	=	$(addprefix $(DIR_O_P2)/,$(SOURCES_P2:.c=.o))
 
 CC		=	gcc
 
-CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -g3
+CFLAGS	=	-Wall -Werror -Wextra
 
 RM		=	rm -f
 

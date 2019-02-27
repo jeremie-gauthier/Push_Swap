@@ -669,7 +669,6 @@ static int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, i
 // 	}
 // }
 
-
 static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 {
 	int				pivot;
@@ -679,97 +678,115 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 	t_stack			**opp_st;
 //essai implementation opti 3
 int				min;
+int				min_opp_st;
 
 	st = (state == 0) ? &lst->st_a : &lst->st_b;
 	opp_st = (state == 0) ? &lst->st_b : &lst->st_a;
 //essai implementation opti 3
-min = ft_stack_nmin(*st, size);
 	if (DEBUG)
-    {
-		ft_printf("\n-----NEW RECURSION-----\nstate = %i\nsize = %u\n", state, 1234);
-        ft_putnbr(1234);
-        // ft_printf("{reset}\n");
-    }
-    while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
-	{
-		if (DEBUG)
-			ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
-		// pivot = ft_choose_pivot(st, &lst, &size, state, fd);
-		pivot = (*st)->nb;
-		rotations = 0;
-		pushs = 0;
-		// if ((*st)->nb != pivot)
-		// {
-		// 	ft_stack_rotate(st);
-		// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
-		// 	rotations++;
-		// 	size--;
-		// }
-		ft_push_stack(st, opp_st);
-		ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
-		size--;
-		pushs++;
-		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
+		ft_dprintf(fd, "\n-----NEW RECURSION-----\nstate = %i\nsize = %u\n{reset}", state, size);
+    // if (state == 0)
+	// {
+		while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
 		{
-//essai implementation opti 3
-if (state == 0 && (*st)->nb == min && rotations == 0)
-{
-	ft_stack_rotate(st);
-	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
-	size--;
-	min = ft_stack_nmin(*st, size);
-	lst->sorted = 1;
-}
-else if (state == -1 && (*st)->nb == min)
-{
-	ft_push_stack(st, opp_st);
-	ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
-	ft_stack_rotate(opp_st);
-	ft_stack_push_back(&lst->st_instruct, ft_stack_new(4));
-	size--;
-	min = ft_stack_nmin(*st, size);
-}
-			else if ((*st)->nb < pivot)
+			if (DEBUG)
+				ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
+			// pivot = ft_choose_pivot(st, &lst, &size, state, fd);
+			pivot = (*st)->nb;
+			rotations = 0;
+			pushs = 0;
+			// if ((*st)->nb != pivot)
+			// {
+			// 	ft_stack_rotate(st);
+			// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
+			// 	rotations++;
+			// 	size--;
+			// }
+			ft_push_stack(st, opp_st);
+			ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
+			size--;
+			pushs++;
+			if (DEBUG)
+				ft_dprintf(fd, "push pivot |size is %u && pushs is %u\n", size, pushs);
+			min = ft_stack_nmin(*st, size);
+			while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
 			{
-				ft_push_stack(st, opp_st);
-				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
-				size--;
-				pushs++;
-			}
-			else
+			//essai implementation opti 3
+			if (state == 0 && (*st)->nb == min && rotations == 0)
 			{
 				ft_stack_rotate(st);
-				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
-				rotations++;
+				ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
 				size--;
+				min = ft_stack_nmin(*st, size);
+				// rotations = 0;
+		// lst->sorted_a= 1;
+				min_opp_st= ft_stack_min(*opp_st);
+				min = (min < min_opp_st) ? min : min_opp_st;
+				if (DEBUG)
+					ft_dprintf(fd, "find min -> rotate nb |size is %u && pushs is %u\n", size, pushs);
 			}
-		}
-		size += rotations;
-		if (lst->sorted == 0)
-			lst->sorted = 1;
-		if (state == 0)
-		{
-		// else
-		// {
-			while (rotations)
+			// else if (state == -1 && (*st)->nb == min)
+			// {
+			// 	ft_push_stack(st, opp_st);
+			// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
+			// 	ft_stack_rotate(opp_st);
+			// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(4));
+			// 	size--;
+			// 	min = ft_stack_nmin(*st, size);
+			// }
+				if ((*st)->nb < pivot)
+				{
+					ft_push_stack(st, opp_st);
+					ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
+					size--;
+					pushs++;
+					if (DEBUG)
+						ft_dprintf(fd, "push nb |size is %u && pushs is %u\n", size, pushs);
+				}
+				else
+				{
+					ft_stack_rotate(st);
+					ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
+					rotations++;
+					size--;
+					if (DEBUG)
+						ft_dprintf(fd, "rotate nb |size is %u && pushs is %u\n", size, pushs);
+				}
+			}
+			size += rotations;
+			if (DEBUG)
+				ft_dprintf(fd, "size+= rotations |size is %u && pushs is %u\n", size, pushs);
+			// if (lst->sorted_a == 0)
+			// 	lst->sorted_a = 1;
+			// if (state == 0)
+			// {
+			// else
+			// {
+				while (rotations)
+				{
+					ft_stack_rev_rotate(st);
+					ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 6 : 7));
+					rotations--;
+				}
+			// }
+			// }
+			if (DEBUG)
 			{
-				ft_stack_rev_rotate(st);
-				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 6 : 7));
-				rotations--;
+				ft_dprintf(fd, "STATE STACK A\n");
+				ft_stack_print_fd(fd, (state == 0) ? *st : *opp_st);
+				ft_dprintf(fd, "STATE STACK B\n");
+				ft_stack_print_fd(fd, (state == 0) ? *opp_st : *st);
+				ft_dprintf(fd, "BEFORE NEW RECURSION SIZE IS: %u\n", size);
 			}
+			ft_st_split(lst, pushs, ~state, fd);
+			if (DEBUG)
+				ft_dprintf(fd, "{green}-----RETURN TO HIGHER RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
 		}
-        // }
-		if (DEBUG)
-		{
-			ft_dprintf(fd, "STATE STACK A\n");
-			ft_stack_print_fd(fd, (state == 0) ? *st : *opp_st);
-			ft_dprintf(fd, "STATE STACK B\n");
-			ft_stack_print_fd(fd, (state == 0) ? *opp_st : *st);
-		}
-		ft_st_split(lst, pushs, ~state, fd);
-		if (DEBUG)
-			ft_dprintf(fd, "{green}-----RETURN TO HIGHER RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
-	}
+	// }
+	// else
+	// {
+
+	// }
 	if (DEBUG)
 		ft_dprintf(fd, "{yellow}>>>>>SORT SEQUENCE<<<<<{reset}\n");
 	ft_sort_substack(st, opp_st, size, state, &lst->st_instruct, fd);
@@ -786,6 +803,7 @@ else if (state == -1 && (*st)->nb == min)
 int		ft_quick_sortv3(t_st *lst, unsigned int size)
 {
 int	fd;
+remove("log.txt");
 fd = open("log.txt", O_CREAT | O_WRONLY, S_IRWXU);
 	if (DEBUG || SHOW_NB)
 	{

@@ -118,7 +118,7 @@ int		main(int argc, char **argv)
 		}
 		else
 		{
-			if (!(ft_quick_sortv3(lst, size)))
+			if (!(ft_quick_sortv2(lst, size)))
 				return (ft_clean_abort(&lst, 1, 1));
 		}
 		ft_print_instructions(lst->st_instruct);

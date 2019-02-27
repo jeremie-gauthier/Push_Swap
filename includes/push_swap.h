@@ -16,14 +16,15 @@
 #include <sys/types.h> //
 #include <sys/stat.h> //
 #include <fcntl.h> //
+#include <stdio.h> //
 
 # include <unistd.h>
 # include <stdlib.h>
 # include "../ft_printf/ft_printf/ft_printf.h"
 
 # define INSTRUCTIONS_SET	11
-# define DEBUG	1
-# define SHOW_NB	1
+# define DEBUG	0
+# define SHOW_NB	0
 
 typedef struct	s_options
 {
@@ -47,8 +48,10 @@ typedef struct	s_st
 	t_stack			*st_b;
 	t_stack			*st_instruct;
 	t_options		*opt_fl;
-	unsigned int	depth	: 5;
-	unsigned int	sorted	: 1;
+	unsigned int	depth		: 5;
+	// unsigned int	sorted	: 1;
+	unsigned int	sorted_a	: 1;
+	unsigned int	sorted_b	: 1;
 }				t_st;
 
 t_data			*init_data(unsigned int size); //
