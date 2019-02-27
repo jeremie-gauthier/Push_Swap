@@ -508,13 +508,13 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 		pivot = (*st)->nb;
 		rotations = 0;
 		pushs = 0;
-		if ((*st)->nb != pivot)
-		{
-			ft_stack_rotate(st);
-			ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
-			rotations++;
-			size--;
-		}
+		// if ((*st)->nb != pivot)
+		// {
+		// 	ft_stack_rotate(st);
+		// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
+		// 	rotations++;
+		// 	size--;
+		// }
 		ft_push_stack(st, opp_st);
 		ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
 		size--;
