@@ -43,6 +43,7 @@ SOURCES_P2	=	main.c	\
 				quick_sort.c	\
 				memory.c	\
 				quick_sortv2.c	\
+				quick_sortv3.c	\
 				insertion_sort.c
 
 HDR		=	$(HDR_PATH)/push_swap.h

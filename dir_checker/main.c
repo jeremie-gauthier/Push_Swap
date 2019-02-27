@@ -51,7 +51,9 @@ int			main(int argc, char **argv)
 			return (ft_clean_abort(&stack_a, &instructions_set, &fl, 0, 1));
 		if (fl->count == 1)
 		{
-			ft_printf("{green}%i\n{reset}", ft_stack_size(instructions_set));
+			ft_printf("{green}");
+			ft_putnbr(ft_stack_size(instructions_set));
+			ft_printf("{reset}\n");
 		}
 		ft_stack_del(&stack_a);
 		ft_stack_del(&instructions_set);

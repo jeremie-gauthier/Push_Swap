@@ -54,6 +54,7 @@ for i in range {1..99}
 		RET=`./push_swap $ARG | ./checker $ARG`
 		if [ "$RET" != "OK" ];
 			then
+			echo $ARG
 			((ERR++))
 			echo -en '\033[0;31m▓\033[0;0m'
 		else

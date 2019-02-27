@@ -489,6 +489,187 @@ static int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, i
 // 	return ((*st)->nb);	
 // }
 
+// static void	ft_st_split_b_to_a(t_st *lst, unsigned int size, int fd)
+// {
+// 	int				pivot;
+// 	unsigned int	pushs;
+// 	t_stack			**st;
+// 	t_stack			**opp_st;
+// int				min;
+
+// 	st = &lst->st_b;
+// 	opp_st = &lst->st_a;
+// //essai implementation opti 3
+// min = ft_stack_nmin(*st, size);
+// 	if (DEBUG)
+// 		ft_dprintf(fd, "\n{red}-----SPLIT B TO A-----\nsize = %u{reset}\n", size);
+// 	while (size > 3)
+// 	{
+// 		if (DEBUG)
+// 			ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
+// 		pivot = (*st)->nb;
+// 		pushs = 0;
+// 		// if ((*st)->nb != pivot)
+// 		// {
+// 		// 	ft_stack_rotate(st);
+// 		// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(4));
+// 		// 	size--;
+// 		// }
+// 		ft_push_stack(st, opp_st);
+// 		ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
+// 		size--;
+// 		pushs++;
+// 		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
+// 		{
+// //essai implementation opti 3
+// if ((*st)->nb == min)
+// {
+// 	ft_push_stack(st, opp_st);
+// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
+// 	ft_stack_rotate(opp_st);
+// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(4));
+// 	size--;
+// 	min = ft_stack_nmin(*st, size);
+// }
+// 			else if ((*st)->nb < pivot)
+// 			{
+// 				ft_push_stack(st, opp_st);
+// 				ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
+// 				size--;
+// 				pushs++;
+// 			}
+// 			else
+// 			{
+// 				ft_stack_rotate(st);
+// 				ft_stack_push_back(&lst->st_instruct, ft_stack_new(4));
+// 				size--;
+// 			}
+// 		}
+// 		if (DEBUG)
+// 		{
+// 			ft_dprintf(fd, "STATE STACK B\n");
+// 			ft_stack_print_fd(fd, *st);
+// 			ft_dprintf(fd, "STATE STACK A\n");
+// 			ft_stack_print_fd(fd, *opp_st);
+// 		}
+//         if (size < 3)
+// 	        ft_sort_substack(st, opp_st, size, 0, &lst->st_instruct, fd);
+// 		else
+//             ft_st_split_b_to_a(lst, pushs, fd);
+// 		if (DEBUG)
+// 			ft_dprintf(fd, "{green}-----RETURN TO B TO A-----\nsize = %u{reset}\n", size);
+// 	}
+// 	if (DEBUG)
+// 		ft_dprintf(fd, "{yellow}>>>>>SORT SEQUENCE<<<<<{reset}\n");
+// 	ft_sort_substack(st, opp_st, size, 0, &lst->st_instruct, fd);
+// 	if (DEBUG)
+// 	{
+// 		ft_dprintf(fd, "{cyan}STATE STACK B\n");
+// 		ft_stack_print_fd(fd, *st);
+// 		ft_dprintf(fd, "STATE STACK A\n");
+// 		ft_stack_print_fd(fd, *opp_st);
+// 		ft_dprintf(fd, "{reset}{bg_green}{black}-----END OF SCOPE-----{reset}\n");
+// 	}
+// }
+
+// static void	ft_st_split_a_to_b(t_st *lst, unsigned int size, int fd)
+// {
+// 	int				pivot;
+// 	unsigned int	rotations;
+// 	unsigned int	pushs;
+// 	t_stack			**st;
+// 	t_stack			**opp_st;
+// //essai implementation opti 3
+// int				min;
+
+// 	st = &lst->st_a;
+// 	opp_st = &lst->st_b;
+// //essai implementation opti 3
+// min = ft_stack_nmin(*st, size);
+// 	if (DEBUG)
+// 		ft_dprintf(fd, "\n{red}-----SPLIT A TO B-----\nsize = %u{reset}\n", size);
+// 	while (size > 3)
+// 	{
+// 		if (DEBUG)
+// 			ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
+// 		// pivot = ft_choose_pivot(st, &lst, &size, state, fd);
+// 		pivot = (*st)->nb;
+// 		rotations = 0;
+// 		pushs = 0;
+// 		// if ((*st)->nb != pivot)
+// 		// {
+// 		// 	ft_stack_rotate(st);
+// 		// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
+// 		// 	rotations++;
+// 		// 	size--;
+// 		// }
+// 		ft_push_stack(st, opp_st);
+// 		ft_stack_push_back(&lst->st_instruct, ft_stack_new(10));
+// 		size--;
+// 		pushs++;
+// 		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
+// 		{
+// //essai implementation opti 3
+// if ((*st)->nb == min && rotations == 0)
+// {
+// 	ft_stack_rotate(st);
+// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
+// 	size--;
+// 	min = ft_stack_nmin(*st, size);
+// 	lst->sorted = 1;
+// }
+// 			else if ((*st)->nb < pivot)
+// 			{
+// 				ft_push_stack(st, opp_st);
+// 				ft_stack_push_back(&lst->st_instruct, ft_stack_new(10));
+// 				size--;
+// 				pushs++;
+// 			}
+// 			else
+// 			{
+// 				ft_stack_rotate(st);
+// 				ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
+// 				rotations++;
+// 				size--;
+// 			}
+// 		}
+// 		size += rotations;
+// 		if (lst->sorted == 0)
+// 			lst->sorted = 1;
+// 		else
+// 		{
+// 			while (rotations)
+// 			{
+// 				ft_stack_rev_rotate(st);
+// 				ft_stack_push_back(&lst->st_instruct, ft_stack_new(6));
+// 				rotations--;
+// 			}
+// 		}
+// 		if (DEBUG)
+// 		{
+// 			ft_dprintf(fd, "STATE STACK A\n");
+// 			ft_stack_print_fd(fd, *st);
+// 			ft_dprintf(fd, "STATE STACK B\n");
+// 			ft_stack_print_fd(fd, *opp_st);
+// 		}
+// 		ft_st_split_b_to_a(lst, pushs, fd);
+// 		if (DEBUG)
+// 			ft_dprintf(fd, "{green}-----RETURN TO A TO B-----\nsize = %u{reset}\n", size);
+// 	}
+// 	if (DEBUG)
+// 		ft_dprintf(fd, "{yellow}>>>>>SORT SEQUENCE<<<<<{reset}\n");
+// 	ft_sort_substack(st, opp_st, size, 0, &lst->st_instruct, fd);
+// 	if (DEBUG)
+// 	{
+// 		ft_dprintf(fd, "{cyan}STATE STACK A\n");
+// 		ft_stack_print_fd(fd, *st);
+// 		ft_dprintf(fd, "STATE STACK B\n");
+// 		ft_stack_print_fd(fd, *opp_st);
+// 		ft_dprintf(fd, "{reset}{bg_green}{black}-----END OF SCOPE-----{reset}\n");
+// 	}
+// }
+
+
 static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 {
 	int				pivot;
@@ -504,8 +685,12 @@ int				min;
 //essai implementation opti 3
 min = ft_stack_nmin(*st, size);
 	if (DEBUG)
-		ft_dprintf(fd, "\n{red}-----NEW RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
-	while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
+    {
+		ft_printf("\n-----NEW RECURSION-----\nstate = %i\nsize = %u\n", state, 1234);
+        ft_putnbr(1234);
+        // ft_printf("{reset}\n");
+    }
+    while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
 	{
 		if (DEBUG)
 			ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
@@ -513,13 +698,13 @@ min = ft_stack_nmin(*st, size);
 		pivot = (*st)->nb;
 		rotations = 0;
 		pushs = 0;
-		if ((*st)->nb != pivot)
-		{
-			ft_stack_rotate(st);
-			ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
-			rotations++;
-			size--;
-		}
+		// if ((*st)->nb != pivot)
+		// {
+		// 	ft_stack_rotate(st);
+		// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
+		// 	rotations++;
+		// 	size--;
+		// }
 		ft_push_stack(st, opp_st);
 		ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
 		size--;
@@ -527,15 +712,24 @@ min = ft_stack_nmin(*st, size);
 		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
 		{
 //essai implementation opti 3
-// if (state == 0 && (*st)->nb == min && rotations == 0)
-// {
-// 	ft_stack_rotate(st);
-// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
-// 	size--;
-// 	min = ft_stack_nmin(*st, size);
-// 	lst->sorted = 1;
-// }
-			if ((*st)->nb < pivot)
+if (state == 0 && (*st)->nb == min && rotations == 0)
+{
+	ft_stack_rotate(st);
+	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
+	size--;
+	min = ft_stack_nmin(*st, size);
+	lst->sorted = 1;
+}
+else if (state == -1 && (*st)->nb == min)
+{
+	ft_push_stack(st, opp_st);
+	ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
+	ft_stack_rotate(opp_st);
+	ft_stack_push_back(&lst->st_instruct, ft_stack_new(4));
+	size--;
+	min = ft_stack_nmin(*st, size);
+}
+			else if ((*st)->nb < pivot)
 			{
 				ft_push_stack(st, opp_st);
 				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
@@ -553,10 +747,10 @@ min = ft_stack_nmin(*st, size);
 		size += rotations;
 		if (lst->sorted == 0)
 			lst->sorted = 1;
-		// if (state == 0)
-		// {
-		else
+		if (state == 0)
 		{
+		// else
+		// {
 			while (rotations)
 			{
 				ft_stack_rev_rotate(st);
@@ -564,7 +758,7 @@ min = ft_stack_nmin(*st, size);
 				rotations--;
 			}
 		}
-		// }
+        // }
 		if (DEBUG)
 		{
 			ft_dprintf(fd, "STATE STACK A\n");
@@ -589,7 +783,7 @@ min = ft_stack_nmin(*st, size);
 	}
 }
 
-int		ft_quick_sortv2(t_st *lst, unsigned int size)
+int		ft_quick_sortv3(t_st *lst, unsigned int size)
 {
 int	fd;
 fd = open("log.txt", O_CREAT | O_WRONLY, S_IRWXU);
