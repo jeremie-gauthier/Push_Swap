@@ -561,16 +561,10 @@ min = ft_stack_nmin(*st, size);
 			}
 		}
 		size += rotations;
-		// if (lst->sorted == 0)
-		// 	lst->sorted = 1;
-		if (lst->sorted_a == 0 && state == 0)
-			lst->sorted_a = 1;
-		else if (lst->sorted_b == 0 && state == -1)
-			lst->sorted_b = 1;
-		// if (state == 0)
-		// {
-		if ((lst->sorted_a == 1 && state == 0) || (lst->sorted_b == 1 && state == -1))
-		// if (lst->sorted)
+		if (lst->sorted == 0)
+			lst->sorted = 1;
+		// if ((lst->sorted_a == 1 && state == 0) || (lst->sorted_b == 1 && state == -1))
+		else
 		{
 			while (rotations)
 			{
@@ -579,6 +573,12 @@ min = ft_stack_nmin(*st, size);
 				rotations--;
 			}
 		}
+		// if (lst->sorted_a == 0 && state == 0)
+		// 	lst->sorted_a = 1;
+		// else if (lst->sorted_b == 0 && state == -1)
+			// lst->sorted_b = 1;
+		// if (state == 0)
+		// {
 
 		// }
 		if (DEBUG)

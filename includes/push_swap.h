@@ -49,9 +49,9 @@ typedef struct	s_st
 	t_stack			*st_instruct;
 	t_options		*opt_fl;
 	unsigned int	depth		: 5;
-	// unsigned int	sorted	: 1;
-	unsigned int	sorted_a	: 1;
-	unsigned int	sorted_b	: 1;
+	unsigned int	sorted	: 1;
+	// unsigned int	sorted_a	: 1;
+	// unsigned int	sorted_b	: 1;
 }				t_st;
 
 t_data			*init_data(unsigned int size); //

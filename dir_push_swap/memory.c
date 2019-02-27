@@ -41,9 +41,9 @@ t_st		*init_stacks(void)
 	new->st_b = NULL;
 	new->st_instruct = NULL;
 	new->depth = 0;
-	// new->sorted = 0;
-	new->sorted_a = 0;
-	new->sorted_b = 0;
+	new->sorted = 0;
+	// new->sorted_a = 0;
+	// new->sorted_b = 0;
 	return (new);
 }
 
