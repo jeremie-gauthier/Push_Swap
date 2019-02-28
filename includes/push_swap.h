@@ -23,11 +23,15 @@
 # include "../ft_printf/ft_printf/ft_printf.h"
 
 # define INSTRUCTIONS_SET	11
+# define CLEAR	"\e[1;1H\e[2J"
+
 # define DEBUG	1
 # define SHOW_NB	1
 
 typedef struct	s_options
 {
+	useconds_t		time;
+	unsigned short	counter;
 	unsigned short	visu	: 1;
 	unsigned short	count	: 1;
 }				t_options;
@@ -62,12 +66,13 @@ void			ft_push_stack(t_stack **leave, t_stack **receive);
 t_stack			*ft_check_args_and_build_stack(t_options *fl, char **argv);
 t_stack			*ft_read_stdin(void);
 int				ft_start_instructions(t_stack **stack_a,
-						t_stack *instructions_set);
+						t_stack *instructions_set, t_options *fl);
 int				ft_dumb_sort(t_st *lst, unsigned int size);
 t_stack			*ft_quick_sort(t_stack **stack_a, unsigned int size);
 int				ft_quick_sortv2(t_st *lst, unsigned int size);
 int				ft_quick_sortv3(t_st *lst, unsigned int size);
 int    			ft_insertion_sort(t_st *lst, unsigned int size);
 int				ft_stack_append(char *str, t_stack **stack_a);
+int				ft_visualizer(t_st *lst, void (*f[3])(t_stack**));
 
 #endif

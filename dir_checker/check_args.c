@@ -87,15 +87,26 @@ t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
 {
 	t_stack	*stack_a;
 
-	if (ft_strcmp(*argv, "-v") == 0)
+	while (!ft_strcmp(*argv, "-v") || !ft_strcmp(*argv, "-t") || !ft_strcmp(*argv, "-l"))
 	{
-		fl->visu = 1;
-		argv++;
-	}
-	if (ft_strcmp(*argv, "-l") == 0)
-	{
-		fl->count = 1;
-		argv++;
+		if (ft_strcmp(*argv, "-v") == 0)
+		{
+			fl->visu = 1;
+			argv++;
+		}
+		if (ft_strcmp(*argv, "-t") == 0)
+		{
+			argv++;
+			fl->time = ft_atoi(*argv);
+			if (fl->time > 5000)
+				fl->time = 5000;
+			argv++;
+		}
+		if (ft_strcmp(*argv, "-l") == 0)
+		{
+			fl->count = 1;
+			argv++;
+		}
 	}
 	if (!(ft_check_args(argv)))
 		return (NULL);

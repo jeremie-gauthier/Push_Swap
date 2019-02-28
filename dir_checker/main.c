@@ -47,7 +47,7 @@ int			main(int argc, char **argv)
 		}
 		if (!(instructions_set = ft_read_stdin()))
 			return (ft_clean_abort(&stack_a, NULL, &fl, 1, 1));
-		if (!(ft_start_instructions(&stack_a, instructions_set)))
+		if (!(ft_start_instructions(&stack_a, instructions_set, fl)))
 			return (ft_clean_abort(&stack_a, &instructions_set, &fl, 0, 1));
 		if (fl->count == 1)
 		{

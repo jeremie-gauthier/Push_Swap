@@ -17,7 +17,7 @@
 **	nb_ref.
 */
 
-int		ft_stack_find(t_stack *head, int nb_ref)
+unsigned int		ft_stack_find(t_stack *head, int nb_ref)
 {
 	unsigned int	i;
 

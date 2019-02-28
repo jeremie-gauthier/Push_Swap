@@ -127,7 +127,7 @@ void				ft_stack_swap_top(t_stack **head);
 void				ft_stack_rotate(t_stack **head);
 void				ft_stack_rev_rotate(t_stack **head);
 void				ft_stack_print(t_stack *current);
-int					ft_stack_find(t_stack *head, int nb_ref);
+unsigned int		ft_stack_find(t_stack *head, int nb_ref);
 int					ft_stack_min(t_stack *head);
 int					ft_stack_nmin(t_stack *head, unsigned int limit);
 int					ft_stack_max(t_stack *head);

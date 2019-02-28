@@ -6,7 +6,9 @@ t_options	*init_options(void)
 
 	if (!(new = (t_options*)malloc(sizeof(new))))
 		return (NULL);
+	new->counter = 0;
 	new->visu = 0;
 	new->count = 0;
+	new->time = 500;
 	return (new);
 }

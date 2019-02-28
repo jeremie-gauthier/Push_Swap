@@ -74,15 +74,22 @@ static void	ft_execute_instructions(t_stack **stack_a,
 }
 
 int			ft_start_instructions(t_stack **stack_a,
-					t_stack *instructions_set)
+					t_stack *instructions_set, t_options *fl)
 {
-	t_stack	*stack_b;
+	t_st	*lst;
 	void	(*f[3])(t_stack**);
 
 	f[0] = &ft_stack_swap_top;
 	f[1] = &ft_stack_rotate;
 	f[2] = &ft_stack_rev_rotate;
-	stack_b = NULL;
-	ft_execute_instructions(stack_a, instructions_set, &stack_b, f);
-	return (ft_final_state_check(*stack_a, stack_b));
+	lst = malloc(sizeof(*lst));
+	lst->st_a = *stack_a;
+	lst->st_b = NULL;
+	lst->st_instruct = instructions_set;
+	lst->opt_fl = fl;
+	if (fl->visu == 1)
+		ft_visualizer(lst, f);
+	else
+		ft_execute_instructions(&lst->st_a, lst->st_instruct, &lst->st_b, f);
+	return (ft_final_state_check(*stack_a, lst->st_b));
 }
