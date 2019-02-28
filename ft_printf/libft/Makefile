@@ -137,6 +137,8 @@ SRCS	=	ft_memset.c		\
 			ft_stack_is_nsort.c	\
 			ft_stack_cmp.c	\
 			ft_stack_ncmp.c	\
+			ft_stack_sum.c	\
+			ft_stack_nsum.c	\
 			ft_arrlen.c	\
 			ft_nb_is_lower.c
 

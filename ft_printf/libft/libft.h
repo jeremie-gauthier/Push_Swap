@@ -139,6 +139,8 @@ int					ft_stack_is_sort(t_stack *head, int rev);
 int					ft_stack_is_nsort(t_stack *head, unsigned int limit, int rev);
 int					ft_stack_cmp(t_stack *head, int data_ref, int (*f)(int, int));
 int					ft_stack_ncmp(t_stack *head, int data_ref, int (*f)(int, int), unsigned int limit);
+long				ft_stack_sum(t_stack *head);
+long				ft_stack_nsum(t_stack *head, unsigned int limit);
 
 int					ft_isblank(int c);
 int					ft_iscntrl(int c);
