@@ -679,7 +679,9 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 //essai implementation opti 3
 int				min;
 int				min_opp_st;
+unsigned int				tmp;
 
+	tmp = 0;
 	st = (state == 0) ? &lst->st_a : &lst->st_b;
 	opp_st = (state == 0) ? &lst->st_b : &lst->st_a;
 //essai implementation opti 3
@@ -712,14 +714,15 @@ int				min_opp_st;
 			while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
 			{
 			//essai implementation opti 3
-			if (state == 0 && (*st)->nb == min && rotations == 0)
+			if (state == 0 && (*st)->nb == min && (lst->sorted == 0 || rotations == 0))
 			{
 				ft_stack_rotate(st);
 				ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
 				size--;
 				min = ft_stack_nmin(*st, size);
-				// rotations = 0;
-		// lst->sorted_a= 1;
+				tmp = rotations;
+				rotations = 0;
+		lst->sorted= 1;
 				min_opp_st= ft_stack_min(*opp_st);
 				min = (min < min_opp_st) ? min : min_opp_st;
 				if (DEBUG)
@@ -753,7 +756,7 @@ int				min_opp_st;
 						ft_dprintf(fd, "rotate nb |size is %u && pushs is %u\n", size, pushs);
 				}
 			}
-			size += rotations;
+			size += (rotations + tmp);
 			if (DEBUG)
 				ft_dprintf(fd, "size+= rotations |size is %u && pushs is %u\n", size, pushs);
 			// if (lst->sorted_a == 0)
