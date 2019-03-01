@@ -25,8 +25,8 @@
 # define INSTRUCTIONS_SET	11
 # define CLEAR	"\e[1;1H\e[2J"
 
-# define DEBUG	1
-# define SHOW_NB	1
+# define DEBUG	0
+# define SHOW_NB	0
 
 typedef struct	s_options
 {
