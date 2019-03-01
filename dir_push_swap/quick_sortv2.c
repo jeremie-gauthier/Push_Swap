@@ -498,7 +498,7 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 	t_stack			**opp_st;
 //essai implementation opti 3
 int				min;
-int				min_opp_st;
+// int				min_opp_st;
 unsigned int	tmp;
 
 	tmp = 0;
@@ -540,18 +540,18 @@ min = ft_stack_nmin(*st, size);
 		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
 		{
 //essai implementation opti 3
-if (state == 0 && (*st)->nb == min && (rotations == 0 || lst->sorted == 0))
-{
-	ft_stack_rotate(st);
-	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
-	size--;
-	min = ft_stack_nmin(*st, size);
-	min_opp_st= ft_stack_min(*opp_st);
-	min = (min < min_opp_st) ? min : min_opp_st;
-	tmp = rotations;
-	rotations = 0;
-	lst->sorted = 1;
-}
+// if (state == 0 && (*st)->nb == min && (rotations == 0 || lst->sorted == 0))
+// {
+// 	ft_stack_rotate(st);
+// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
+// 	size--;
+// 	min = ft_stack_nmin(*st, size);
+// 	min_opp_st= ft_stack_min(*opp_st);
+// 	min = (min < min_opp_st) ? min : min_opp_st;
+// 	tmp = rotations;
+// 	rotations = 0;
+// 	lst->sorted = 1;
+// }
 // else if (state == -1 && (*st)->nb == min)
 // {
 // 	ft_push_stack(st, opp_st);
@@ -561,7 +561,7 @@ if (state == 0 && (*st)->nb == min && (rotations == 0 || lst->sorted == 0))
 // 	size--;
 // 	min = ft_stack_nmin(*st, size);
 // }
-			else if ((*st)->nb < pivot)
+			if ((*st)->nb < pivot)
 			{
 				ft_push_stack(st, opp_st);
 				ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
