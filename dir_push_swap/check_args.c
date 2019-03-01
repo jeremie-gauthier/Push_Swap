@@ -87,9 +87,11 @@ t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
 {
 	t_stack	*stack_a;
 
-	if (ft_strcmp(*argv, "-l") == 0)
+	if (ft_strcmp(*argv, "-f") == 0)
 	{
-		fl->count = 1;
+		argv++;
+		if (!(fl->pathname = ft_strdup(*argv)))
+			return (NULL);
 		argv++;
 	}
 	if (!(ft_check_args(argv)))

@@ -22,10 +22,33 @@ static int	ft_clean_abort(t_st **lst, int msg, int ret)
 	return (ret);
 }
 
-int		ft_print_instructions(t_stack *instruct_set)
+static int		ft_safe_open(const char *pathname)
+{
+	int		fd;
+
+	if ((fd = open(pathname, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR)) < 0)
+	{
+		ft_printf("{red}Fail to open {bold}%s{reset}{red}, write in stdout :{reset}\n", pathname);
+		return (1);
+	}
+	return (fd);
+}
+
+static int		ft_safe_close(const int fd, const char *pathname)
+{
+	if (close(fd) < 0)
+	{
+		ft_printf("{red}Fail to close {bold}%s{reset}\n", pathname);
+		return (-1);
+	}
+	return (1);
+}
+
+int		ft_print_instructions(t_stack *instruct_set, t_options *fl)
 {
 	char	*ret;
 	size_t	i;
+	int		fd;
 
 	// ft_printf("st_size = %u\nsize = %u\ndebut---\n", ft_stack_size(instruct_set), size);
 	// ft_stack_print(instruct_set);
@@ -85,14 +108,18 @@ int		ft_print_instructions(t_stack *instruct_set)
 		instruct_set = instruct_set->next;
 	}
 	ret[i] = '\0';
-	ft_putstr(ret);
-	// ft_printf("ret addr : %p\n", &ret);
-	// ft_printf("%s\n", ret);
-	// ft_printf("Hello from the otter side\n");
-	// ft_printf("avant del ret\n");
+	if (fl->pathname != NULL)
+	{
+		if (!(fd = ft_safe_open(fl->pathname)))
+			return (0);
+		ft_dprintf(fd, "%s", ret);
+		if (!(fd = ft_safe_close(fd, fl->pathname)))
+			return (0);
+	}
+	else
+		ft_dprintf(1, "%s", ret);
+	// ft_putstr(ret);
 	ft_strdel(&ret);
-	// ft_printf("apres del ret\n");
-	// free(ret);
 	return (1);
 }
 
@@ -121,15 +148,8 @@ int		main(int argc, char **argv)
 			if (!(ft_quick_sortv2(lst, size)))
 				return (ft_clean_abort(&lst, 1, 1));
 		}
-		ft_print_instructions(lst->st_instruct);
-		// if (fl->count == 1)
-		// {
-		// 	ft_printf("{green}%i\n{reset}", ft_stack_size(instruct_set));
-		// }
-		// ft_printf("avant del lst\n");
+		ft_print_instructions(lst->st_instruct, lst->opt_fl);
 		st_del(&lst);
-		
-		// ft_printf("apres del lst\n");
 	}
 	return (0);
 }
