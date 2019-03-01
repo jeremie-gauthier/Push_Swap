@@ -87,7 +87,7 @@ t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
 {
 	t_stack	*stack_a;
 
-	while (!ft_strcmp(*argv, "-v") || !ft_strcmp(*argv, "-t") || !ft_strcmp(*argv, "-l"))
+	while (!ft_strcmp(*argv, "-v") || !ft_strcmp(*argv, "-t") || !ft_strcmp(*argv, "-l") || !ft_strcmp(*argv, "-f"))
 	{
 		if (ft_strcmp(*argv, "-v") == 0)
 		{
@@ -105,6 +105,13 @@ t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
 		if (ft_strcmp(*argv, "-l") == 0)
 		{
 			fl->count = 1;
+			argv++;
+		}
+		if (ft_strcmp(*argv, "-f") == 0)
+		{
+			argv++;
+			if (!(fl->pathname = ft_strdup(*argv)))
+				return (NULL);
 			argv++;
 		}
 	}

@@ -30,6 +30,7 @@
 
 typedef struct	s_options
 {
+	char			*pathname;
 	useconds_t		time;
 	unsigned short	counter;
 	unsigned short	visu	: 1;
@@ -64,7 +65,7 @@ t_st			*init_stacks(void);
 void			st_del(t_st **lst);
 void			ft_push_stack(t_stack **leave, t_stack **receive);
 t_stack			*ft_check_args_and_build_stack(t_options *fl, char **argv);
-t_stack			*ft_read_stdin(void);
+t_stack			*ft_read_stdin(t_options *opt);
 int				ft_start_instructions(t_stack **stack_a,
 						t_stack *instructions_set, t_options *fl);
 int				ft_dumb_sort(t_st *lst, unsigned int size);

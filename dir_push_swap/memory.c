@@ -49,14 +49,10 @@ t_st		*init_stacks(void)
 
 void		st_del(t_st **lst)
 {
-	// ft_printf("del a\n");
 	ft_stack_del(&(*lst)->st_a);
-	// ft_printf("del b\n");
 	ft_stack_del(&(*lst)->st_b);
-	// ft_printf("del set\n");
 	ft_stack_del(&(*lst)->st_instruct);
-	// ft_printf("del flags\n");
+	ft_strdel(&(*lst)->opt_fl->pathname);
 	ft_memdel((void*)&(*lst)->opt_fl);
-	// ft_printf("del lst struct\n");
 	ft_memdel((void*)lst);
 }

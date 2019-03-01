@@ -82,7 +82,9 @@ int			ft_start_instructions(t_stack **stack_a,
 	f[0] = &ft_stack_swap_top;
 	f[1] = &ft_stack_rotate;
 	f[2] = &ft_stack_rev_rotate;
-	lst = malloc(sizeof(*lst));
+	lst = malloc(sizeof(*lst)); //
+	if (lst == NULL)
+		return (-1);
 	lst->st_a = *stack_a;
 	lst->st_b = NULL;
 	lst->st_instruct = instructions_set;
