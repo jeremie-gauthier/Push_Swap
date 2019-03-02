@@ -43,8 +43,12 @@ SOURCES_P2	=	main.c	\
 				memory.c	\
 				quick_sort.c	\
 				insertion_sort.c	\
+				optimizer.c	\
 				sort_deepest_stack.c	\
-				optimizer.c
+				sort_size_one.c	\
+				sort_size_two.c	\
+				sort_size_three_empty.c	\
+				sort_size_three_full.c
 
 HDR		=	$(HDR_PATH)/push_swap.h
 

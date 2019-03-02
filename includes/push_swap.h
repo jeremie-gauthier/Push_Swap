@@ -63,6 +63,11 @@ int				ft_visualizer(t_st *lst, void (*f[3])(t_stack**));
 int				ft_sort_deepest_stack(t_st *lst, unsigned int size, int state);
 int				change_last_instruction(t_stack *instr_set, int supposed_val, int new_val);
 
+int    			ft_sort_size_one(t_st *lst, int state);
+int     		ft_sort_size_one(t_st *lst, int state);
+int        		ft_sort_size_three_empty(t_st *lst, int state);
+int       	  	ft_sort_size_three_full(t_st *lst, int state);
+
 int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, int state, t_stack **instr_set);
 
 #endif

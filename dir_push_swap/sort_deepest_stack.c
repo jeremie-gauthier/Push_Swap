@@ -4,11 +4,9 @@ int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, int stat
 {
 	t_stack	*new;
 	int		i;
-	int		elem_on_opp_st;
 
 	if (ft_stack_is_sort(*st, 0) == 1 && (*opp_st) == NULL)
 		return (1);
-	elem_on_opp_st = 0;
 	i = 0;
 	if (size == 1)
 	{
@@ -439,317 +437,352 @@ int	ft_sort_deepest_stack(t_st *lst, unsigned int size, int state)
 	i = 0;
 	if (size == 1)
 	{
-		if (state == -1)
-		{
-			if (change_last_instruction(lst->st_instruct, 10, 3) == 1)
-			{
-				ft_push_stack(&lst->st_b, &lst->st_a);
-				ft_stack_rotate(&lst->st_a);
-			}
-			else
-			{
-				if (!(ft_push_stack_and_write(lst, -1)))
-					return (0);
-				if (!(ft_rotate_and_write(lst, 0)))
-					return (0);
-			}
-		}
-		else
-		{
-			if (!(ft_rotate_and_write(lst, 0)))
-				return (0);
-		}
+		if (!(ft_sort_size_one(lst, state)))
+			return (0);
 	}
 	else if (size == 2)
 	{
-		if (state == 0)
-		{
-			if (lst->st_a->nb > lst->st_a->next->nb)
-			{
-				if (!(ft_swap_and_write(lst, 0)))
-					return (0);
-			}
-			while (i < 2)
-			{
-				if (!(ft_rotate_and_write(lst, 0)))
-					return (0);
-				i++;
-			}
-		}
-		else
-		{
-			if (lst->st_b->nb < lst->st_b->next->nb)
-			{
-				while (i < 2)
-				{
-					if (!(ft_push_stack_and_write(lst, -1)))
-						return (0);
-					if (!(ft_rotate_and_write(lst, 0)))
-						return (0);
-					i++;
-				}
-			}
-			else
-			{
-				while (i < 2)
-				{
-					if (!(ft_push_stack_and_write(lst, -1)))
-						return (0);
-					i++;
-				}
-				i = 0;
-				while (i < 2)
-				{
-					if (!(ft_rotate_and_write(lst, 0)))
-						return (0);
-					i++;
-				}
-			}
-		}
-		
+		if (!(ft_sort_size_two(lst, state)))
+			return (0);
 	}
 	else if (size == 3)
 	{
 		if (((state == 0) ? lst->st_a : lst->st_b)->next->next->next == NULL)
 		{
-			if (state == 0)
-			{
-				if (lst->st_a->next->nb > lst->st_a->nb && lst->st_a->next->nb > lst->st_a->next->next->nb)
-				{
-					if (!(ft_rev_rotate_and_write(lst, 0)))
-						return (0);
-				}
-				if (lst->st_a->nb > lst->st_a->next->nb && lst->st_a->nb > lst->st_a->next->next->nb)
-				{
-					if (!(ft_rotate_and_write(lst, 0)))
-						return (0);
-				}
-				if (lst->st_a->nb > lst->st_a->next->nb)
-				{
-					if (!(ft_swap_and_write(lst, 0)))
-						return (0);
-				}
-			}
-			else
-			{
-				while (size)
-				{
-					if (lst->st_b->nb == ft_stack_nmin(lst->st_b, size))
-					{
-						if (!(ft_push_stack_and_write(lst, -1)))
-							return (0);
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-					}
-					else if (lst->st_b->next->nb == ft_stack_nmin(lst->st_b, size))
-					{
-						while (i < 2)
-						{
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-							i++;
-						}
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-						if (lst->st_b->nb < lst->st_a->nb)
-						{
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							size--;
-						}
-						else
-						{
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							size--;
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-						}
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-					}
-					else
-					{
-						while (i < 3)
-						{
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-							i++;
-						}
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-						if (lst->st_a->nb > lst->st_a->next->nb)
-						{
-							if (!(ft_swap_and_write(lst, 0)))
-								return (0);
-						}
-						i = 0;
-						while (i < 2)
-						{
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							size--;
-							i++;
-						}
-					}
-				}
-			}
+			if (!(ft_sort_size_three_empty(lst, state)))
+				return (0);
 		}
 		else
 		{
-			if (state == 0)
-			{
-				// top < (mid && bot)
-				if (lst->st_a->nb < lst->st_a->next->nb && lst->st_a->nb < lst->st_a->next->next->nb)
-				{
-					if (!(ft_rotate_and_write(lst, 0)))
-						return (0);
-					if (lst->st_a->nb > lst->st_a->next->nb)
-					{
-						if (!(ft_swap_and_write(lst, 0)))
-							return (0);
-					}
-					while (i < 2)
-					{
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						i++;
-					}
-				}
-				//top > mid && top < bot
-				else if (lst->st_a->nb > lst->st_a->next->nb && lst->st_a->nb < lst->st_a->next->next->nb)
-				{
-					if (!(ft_swap_and_write(lst, 0)))
-						return (0);
-					while (i < 3)
-					{
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						i++;
-					}
-				}
-				//bot > mid && bot < top
-				else if (lst->st_a->next->next->nb > lst->st_a->next->nb && lst->st_a->next->next->nb < lst->st_a->nb)
-				{
-					while (i < 2)
-					{
-						if (!(ft_swap_and_write(lst, 0)))
-							return (0);
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						i++;
-					}
-					if (!(ft_rotate_and_write(lst, 0)))
-						return (0);
-				}
-				else
-				{
-					if (!(ft_push_stack_and_write(lst, 0)))
-						return (0);
-					if (!(ft_swap_and_write(lst, 0)))
-						return (0);
-					if (!(ft_rotate_and_write(lst, 0)))
-						return (0);
-					if (lst->st_a->nb > lst->st_b->nb)
-					{
-						if (!(ft_push_stack_and_write(lst, -1)))
-							return (0);
-						while (i < 2)
-						{
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							i++;
-						}
-					}
-					else
-					{
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						if (!(ft_push_stack_and_write(lst, -1)))
-							return (0);
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-					}	
-				}				
-			}
-			else
-			{
-				while (size)
-				{
-					if (lst->st_b->nb == ft_stack_nmin(lst->st_b, size))
-					{
-						if (!(ft_push_stack_and_write(lst, -1)))
-							return (0);
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-					}
-					else if (lst->st_b->next->nb == ft_stack_nmin(lst->st_b, size))
-					{
-
-						while (i < 2)
-						{
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-							i++;
-						}
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-						if (lst->st_b->nb < lst->st_a->nb)
-						{
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							size--;
-						}
-						else
-						{
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							size--;
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-						}
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-					}
-					else
-					{
-						while (i < 3)
-						{
-							if (!(ft_push_stack_and_write(lst, -1)))
-								return (0);
-							i++;
-						}
-						if (!(ft_rotate_and_write(lst, 0)))
-							return (0);
-						size--;
-						if (lst->st_a->nb > lst->st_a->next->nb)
-						{
-							if (!(ft_swap_and_write(lst, 0)))
-								return (0);
-						}
-						i = 0;
-						while (i < 2)
-						{
-							if (!(ft_rotate_and_write(lst, 0)))
-								return (0);
-							size--;
-							i++;
-						}
-					}
-				}
-			}
+			if (!(ft_sort_size_three_full(lst, state)))
+				return (0);
 		}
 	}
 	return (1);
 }
+
+
+// int	ft_sort_deepest_stack(t_st *lst, unsigned int size, int state)
+// {
+// 	int		i;
+
+// 	if (ft_stack_is_sort((state == 0) ? lst->st_a : lst->st_b, 0) == 1
+// 				&& ((state == 0) ? lst->st_a : lst->st_b) == NULL)
+// 		return (1);
+// 	i = 0;
+// 	if (size == 1)
+// 	{
+// 		if (state == -1)
+// 		{
+// 			if (change_last_instruction(lst->st_instruct, 10, 3) == 1)
+// 			{
+// 				ft_push_stack(&lst->st_b, &lst->st_a);
+// 				ft_stack_rotate(&lst->st_a);
+// 			}
+// 			else
+// 			{
+// 				if (!(ft_push_stack_and_write(lst, -1)))
+// 					return (0);
+// 				if (!(ft_rotate_and_write(lst, 0)))
+// 					return (0);
+// 			}
+// 		}
+// 		else
+// 		{
+// 			if (!(ft_rotate_and_write(lst, 0)))
+// 				return (0);
+// 		}
+// 	}
+// 	else if (size == 2)
+// 	{
+// 		if (state == 0)
+// 		{
+// 			if (lst->st_a->nb > lst->st_a->next->nb)
+// 			{
+// 				if (!(ft_swap_and_write(lst, 0)))
+// 					return (0);
+// 			}
+// 			while (i < 2)
+// 			{
+// 				if (!(ft_rotate_and_write(lst, 0)))
+// 					return (0);
+// 				i++;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			if (lst->st_b->nb < lst->st_b->next->nb)
+// 			{
+// 				while (i < 2)
+// 				{
+// 					if (!(ft_push_stack_and_write(lst, -1)))
+// 						return (0);
+// 					if (!(ft_rotate_and_write(lst, 0)))
+// 						return (0);
+// 					i++;
+// 				}
+// 			}
+// 			else
+// 			{
+// 				while (i < 2)
+// 				{
+// 					if (!(ft_push_stack_and_write(lst, -1)))
+// 						return (0);
+// 					i++;
+// 				}
+// 				i = 0;
+// 				while (i < 2)
+// 				{
+// 					if (!(ft_rotate_and_write(lst, 0)))
+// 						return (0);
+// 					i++;
+// 				}
+// 			}
+// 		}
+		
+// 	}
+// 	else if (size == 3)
+// 	{
+// 		if (((state == 0) ? lst->st_a : lst->st_b)->next->next->next == NULL)
+// 		{
+// 			if (state == 0)
+// 			{
+// 				if (lst->st_a->next->nb > lst->st_a->nb && lst->st_a->next->nb > lst->st_a->next->next->nb)
+// 				{
+// 					if (!(ft_rev_rotate_and_write(lst, 0)))
+// 						return (0);
+// 				}
+// 				if (lst->st_a->nb > lst->st_a->next->nb && lst->st_a->nb > lst->st_a->next->next->nb)
+// 				{
+// 					if (!(ft_rotate_and_write(lst, 0)))
+// 						return (0);
+// 				}
+// 				if (lst->st_a->nb > lst->st_a->next->nb)
+// 				{
+// 					if (!(ft_swap_and_write(lst, 0)))
+// 						return (0);
+// 				}
+// 			}
+// 			else
+// 			{
+// 				while (size)
+// 				{
+// 					if (lst->st_b->nb == ft_stack_nmin(lst->st_b, size))
+// 					{
+// 						if (!(ft_push_stack_and_write(lst, -1)))
+// 							return (0);
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 					}
+// 					else if (lst->st_b->next->nb == ft_stack_nmin(lst->st_b, size))
+// 					{
+// 						while (i < 2)
+// 						{
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 							i++;
+// 						}
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 						if (lst->st_b->nb < lst->st_a->nb)
+// 						{
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							size--;
+// 						}
+// 						else
+// 						{
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							size--;
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 						}
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 					}
+// 					else
+// 					{
+// 						while (i < 3)
+// 						{
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 							i++;
+// 						}
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 						if (lst->st_a->nb > lst->st_a->next->nb)
+// 						{
+// 							if (!(ft_swap_and_write(lst, 0)))
+// 								return (0);
+// 						}
+// 						i = 0;
+// 						while (i < 2)
+// 						{
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							size--;
+// 							i++;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 		else
+// 		{
+// 			if (state == 0)
+// 			{
+// 				// top < (mid && bot)
+// 				if (lst->st_a->nb < lst->st_a->next->nb && lst->st_a->nb < lst->st_a->next->next->nb)
+// 				{
+// 					if (!(ft_rotate_and_write(lst, 0)))
+// 						return (0);
+// 					if (lst->st_a->nb > lst->st_a->next->nb)
+// 					{
+// 						if (!(ft_swap_and_write(lst, 0)))
+// 							return (0);
+// 					}
+// 					while (i < 2)
+// 					{
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						i++;
+// 					}
+// 				}
+// 				//top > mid && top < bot
+// 				else if (lst->st_a->nb > lst->st_a->next->nb && lst->st_a->nb < lst->st_a->next->next->nb)
+// 				{
+// 					if (!(ft_swap_and_write(lst, 0)))
+// 						return (0);
+// 					while (i < 3)
+// 					{
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						i++;
+// 					}
+// 				}
+// 				//bot > mid && bot < top
+// 				else if (lst->st_a->next->next->nb > lst->st_a->next->nb && lst->st_a->next->next->nb < lst->st_a->nb)
+// 				{
+// 					while (i < 2)
+// 					{
+// 						if (!(ft_swap_and_write(lst, 0)))
+// 							return (0);
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						i++;
+// 					}
+// 					if (!(ft_rotate_and_write(lst, 0)))
+// 						return (0);
+// 				}
+// 				else
+// 				{
+// 					if (!(ft_push_stack_and_write(lst, 0)))
+// 						return (0);
+// 					if (!(ft_swap_and_write(lst, 0)))
+// 						return (0);
+// 					if (!(ft_rotate_and_write(lst, 0)))
+// 						return (0);
+// 					if (lst->st_a->nb > lst->st_b->nb)
+// 					{
+// 						if (!(ft_push_stack_and_write(lst, -1)))
+// 							return (0);
+// 						while (i < 2)
+// 						{
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							i++;
+// 						}
+// 					}
+// 					else
+// 					{
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						if (!(ft_push_stack_and_write(lst, -1)))
+// 							return (0);
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 					}	
+// 				}				
+// 			}
+// 			else
+// 			{
+// 				while (size)
+// 				{
+// 					if (lst->st_b->nb == ft_stack_nmin(lst->st_b, size))
+// 					{
+// 						if (!(ft_push_stack_and_write(lst, -1)))
+// 							return (0);
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 					}
+// 					else if (lst->st_b->next->nb == ft_stack_nmin(lst->st_b, size))
+// 					{
+
+// 						while (i < 2)
+// 						{
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 							i++;
+// 						}
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 						if (lst->st_b->nb < lst->st_a->nb)
+// 						{
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							size--;
+// 						}
+// 						else
+// 						{
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							size--;
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 						}
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 					}
+// 					else
+// 					{
+// 						while (i < 3)
+// 						{
+// 							if (!(ft_push_stack_and_write(lst, -1)))
+// 								return (0);
+// 							i++;
+// 						}
+// 						if (!(ft_rotate_and_write(lst, 0)))
+// 							return (0);
+// 						size--;
+// 						if (lst->st_a->nb > lst->st_a->next->nb)
+// 						{
+// 							if (!(ft_swap_and_write(lst, 0)))
+// 								return (0);
+// 						}
+// 						i = 0;
+// 						while (i < 2)
+// 						{
+// 							if (!(ft_rotate_and_write(lst, 0)))
+// 								return (0);
+// 							size--;
+// 							i++;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return (1);
+// }
