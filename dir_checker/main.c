@@ -44,17 +44,9 @@ int			main(int argc, char **argv)
 			return (ft_clean_abort(&lst, 0, 0));
 		if (!(lst->st_instruct = ft_read_stdin(lst->opt_fl)))
 			return (ft_clean_abort(&lst, 1, 1));
-		ret = ft_start_instructions(&lst->st_a, lst->st_instruct, lst->opt_fl);
+		ret = ft_start_instructions(lst);
 		if (ret == -1)
 			return (ft_clean_abort(&lst, 2, 1));
-		else
-			return (ft_clean_abort(&lst, 0, 0));	
-		if (lst->opt_fl->count == 1)
-		{
-			ft_printf("{green}");
-			ft_putnbr(ft_stack_size(lst->st_instruct));
-			ft_printf("{reset}\n");
-		}
 		st_del(&lst);
 	}
 	else

@@ -46,6 +46,8 @@
 # define BG_BLUE	"\033[44m"
 # define BG_MAGENTA	"\033[45m"
 # define BG_CYAN	"\033[46m"
+# define CLEAR		"\e[1;1H\e[2J"
+
 
 typedef struct	s_buf
 {

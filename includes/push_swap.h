@@ -23,10 +23,6 @@
 # include "../ft_printf/ft_printf/ft_printf.h"
 
 # define INSTRUCTIONS_SET	11
-# define CLEAR	"\e[1;1H\e[2J"
-
-# define DEBUG	0
-# define SHOW_NB	0
 
 typedef struct	s_options
 {
@@ -43,7 +39,7 @@ typedef struct	s_st
 	t_stack			*st_b;
 	t_stack			*st_instruct;
 	t_options		*opt_fl;
-	unsigned int	depth		: 5;
+	unsigned int	depth	: 5;
 	unsigned int	sorted	: 1;
 }				t_st;
 
@@ -51,14 +47,22 @@ t_options		*init_options(void);
 t_st			*init_stacks(void);
 void			st_del(t_st **lst);
 void			ft_push_stack(t_stack **leave, t_stack **receive);
+int				ft_push_stack_and_write(t_st *lst, int state);
+int				ft_rotate_and_write(t_st *lst, int state);
+int				ft_rev_rotate_and_write(t_st *lst, int state);
+int				ft_swap_and_write(t_st *lst, int state);
+
 t_stack			*ft_check_args_and_build_stack(t_options *fl, char **argv);
 t_stack			*ft_read_stdin(t_options *opt);
-int				ft_start_instructions(t_stack **stack_a,
-						t_stack *instructions_set, t_options *fl);
+int				ft_start_instructions(t_st *lst);
 int				ft_dumb_sort(t_st *lst, unsigned int size);
-int				ft_quick_sort(t_st *lst, unsigned int size);
+int				ft_quick_sort(t_st *lst, unsigned int size, int state);
 int    			ft_insertion_sort(t_st *lst, unsigned int size);
 int				ft_stack_append(char *str, t_stack **stack_a);
 int				ft_visualizer(t_st *lst, void (*f[3])(t_stack**));
+int				ft_sort_deepest_stack(t_st *lst, unsigned int size, int state);
+int				change_last_instruction(t_stack *instr_set, int supposed_val, int new_val);
+
+int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, int state, t_stack **instr_set);
 
 #endif

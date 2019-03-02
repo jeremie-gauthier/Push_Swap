@@ -35,6 +35,8 @@ static char		*get_ansi_bg_color_code(char *color)
 		return (BG_MAGENTA);
 	if (ft_strcasecmp(color, "BG_CYAN") == 0)
 		return (BG_CYAN);
+	if (ft_strcasecmp(color, "CLEAR") == 0)
+		return (CLEAR);	
 	if (ft_strcasecmp(color, "RESET") == 0)
 		return (RESET);
 	return (NULL);

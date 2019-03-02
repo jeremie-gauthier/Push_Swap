@@ -7,8 +7,10 @@ int		ft_visualizer(t_st *lst, void (*f[3])(t_stack**))
 	unsigned int	diff;
 	t_stack			*tmp_a;
 	t_stack			*tmp_b;
+	t_stack			*tmp_set;
 	// int				last_actions;
 
+	tmp_set = lst->st_instruct;
 	while (lst->st_instruct)
 	{
 		tmp_a = lst->st_a;
@@ -16,7 +18,7 @@ int		ft_visualizer(t_st *lst, void (*f[3])(t_stack**))
 		size_a = ft_stack_size(lst->st_a);
 		size_b = ft_stack_size(lst->st_b);
 		diff = ft_abs(size_a - size_b);
-		ft_printf("%s{blue}*****************************************{reset}\n", CLEAR);
+		ft_printf("{CLEAR}{blue}*****************************************{reset}\n");
 		while (diff > 0)
 		{
 			if (size_a > size_b)
@@ -65,7 +67,7 @@ int		ft_visualizer(t_st *lst, void (*f[3])(t_stack**))
 	size_a = ft_stack_size(lst->st_a);
 	size_b = ft_stack_size(lst->st_b);
 	diff = ft_abs(size_a - size_b);
-	ft_printf("%s{blue}*****************************************{reset}\n", CLEAR);
+	ft_printf("{CLEAR}{blue}*****************************************{reset}\n");
 	while (diff > 0)
 	{
 		if (size_a > size_b)
@@ -83,5 +85,6 @@ int		ft_visualizer(t_st *lst, void (*f[3])(t_stack**))
 	ft_printf("{blue}|-------------------|-------------------|\n|{yellow}%13s{blue}%7c{yellow}%13s{blue}%7c\
 		\n*****************************************{reset}\n{yellow}Moves : %hu{reset}\n", "STACK A", '|', "STACK B", '|',
 				lst->opt_fl->counter);
+	lst->st_instruct = tmp_set;
 	return (0);
 }

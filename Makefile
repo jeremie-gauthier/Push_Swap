@@ -40,10 +40,11 @@ OBJS_P1	=	$(addprefix $(DIR_O_P1)/,$(SOURCES_P1:.c=.o))
 SOURCES_P2	=	main.c	\
 				stack_operations.c	\
 				check_args.c	\
-				dumb_sort.c	\
-				quick_sort.c	\
 				memory.c	\
-				insertion_sort.c
+				quick_sort.c	\
+				insertion_sort.c	\
+				sort_deepest_stack.c	\
+				optimizer.c
 
 HDR		=	$(HDR_PATH)/push_swap.h
 

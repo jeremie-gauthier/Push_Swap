@@ -12,19 +12,20 @@
 
 #include "../includes/push_swap.h"
 
-static int	ft_final_state_check(t_stack *stack_a, t_stack *stack_b)
+static int	ft_final_state_check(t_st *lst)
 {
-	if (stack_b != NULL)
-	{
-		ft_stack_del(&stack_b);
-		write(1, "KO\n", 3);
-		return (0);
-	}
-	if (!(ft_stack_is_sort(stack_a, 0)))
+	if (lst->st_b != NULL)
 	{
 		write(1, "KO\n", 3);
 		return (0);
 	}
+	if (!(ft_stack_is_sort(lst->st_a, 0)))
+	{
+		write(1, "KO\n", 3);
+		return (0);
+	}
+	if (lst->opt_fl->count == 1)
+		ft_printf("{green}Moves : %i{reset}\n", ft_stack_size(lst->st_instruct));
 	write(1, "OK\n", 3);
 	return (1);
 }
@@ -44,54 +45,46 @@ static int	ft_final_state_check(t_stack *stack_a, t_stack *stack_b)
 **		instr_set->nb % 3 = The argument(s) to send to the function.
 */
 
-static void	ft_execute_instructions(t_stack **stack_a,
-				t_stack *instructions_set, t_stack **stack_b,
-					void (*f[3])(t_stack**))
+static void	ft_execute_instructions(t_st *lst, void (*f[3])(t_stack**))
 {
-	if (f && instructions_set && *stack_a)
+	t_stack	*set;
+
+	set = lst->st_instruct;
+	if (f && set && lst->st_a)
 	{
-		while (instructions_set)
+		while (set)
 		{
-			if (instructions_set->nb == 9)
-				ft_push_stack(stack_b, stack_a);
-			else if (instructions_set->nb == 10)
-				ft_push_stack(stack_a, stack_b);
+			if (set->nb == 9)
+				ft_push_stack(&lst->st_b, &lst->st_a);
+			else if (set->nb == 10)
+				ft_push_stack(&lst->st_a, &lst->st_b);
 			else
 			{
-				if (instructions_set->nb % 3 == 0)
-					f[instructions_set->nb / 3](stack_a);
-				else if (instructions_set->nb % 3 == 1)
-					f[instructions_set->nb / 3](stack_b);
+				if (set->nb % 3 == 0)
+					f[set->nb / 3](&lst->st_a);
+				else if (set->nb % 3 == 1)
+					f[set->nb / 3](&lst->st_b);
 				else
 				{
-					f[instructions_set->nb / 3](stack_a);
-					f[instructions_set->nb / 3](stack_b);
+					f[set->nb / 3](&lst->st_a);
+					f[set->nb / 3](&lst->st_b);
 				}
 			}
-			instructions_set = instructions_set->next;
+			set = set->next;
 		}
 	}
 }
 
-int			ft_start_instructions(t_stack **stack_a,
-					t_stack *instructions_set, t_options *fl)
+int			ft_start_instructions(t_st *lst)
 {
-	t_st	*lst;
 	void	(*f[3])(t_stack**);
 
 	f[0] = &ft_stack_swap_top;
 	f[1] = &ft_stack_rotate;
 	f[2] = &ft_stack_rev_rotate;
-	lst = malloc(sizeof(*lst)); //
-	if (lst == NULL)
-		return (-1);
-	lst->st_a = *stack_a;
-	lst->st_b = NULL;
-	lst->st_instruct = instructions_set;
-	lst->opt_fl = fl;
-	if (fl->visu == 1)
+	if (lst->opt_fl->visu == 1)
 		ft_visualizer(lst, f);
 	else
-		ft_execute_instructions(&lst->st_a, lst->st_instruct, &lst->st_b, f);
-	return (ft_final_state_check(*stack_a, lst->st_b));
+		ft_execute_instructions(lst, f);
+	return (ft_final_state_check(lst));
 }
