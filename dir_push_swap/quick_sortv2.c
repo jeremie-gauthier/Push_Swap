@@ -496,71 +496,24 @@ static void	ft_st_split(t_st *lst, unsigned int size, int state, int fd)
 	unsigned int	pushs;
 	t_stack			**st;
 	t_stack			**opp_st;
-//essai implementation opti 3
-int				min;
-int				min_opp_st;
-unsigned int	tmp;
 
-	tmp = 0;
 	st = (state == 0) ? &lst->st_a : &lst->st_b;
 	opp_st = (state == 0) ? &lst->st_b : &lst->st_a;
-	// if (state == 0)
-	// {
-	// 	if (*opp_st == NULL)
-	// 		lst->sorted_b = 0;
-	// }
-	// else
-	// {
-	// 	if (*st == NULL)
-	// 		lst->sorted_b = 0;
-	// }
-//essai implementation opti 3
-min = ft_stack_nmin(*st, size);
 	if (DEBUG)
 		ft_dprintf(fd, "\n{red}-----NEW RECURSION-----\nsize = %u\nstate = %i{reset}\n", size, state);
-	while (size > 3) //&& ft_stack_is_sort(*st, 0) == 0) 
+	while (size > 3)
 	{
 		if (DEBUG)
 			ft_dprintf(fd, "{yellow}>>>>>SPLIT SEQUENCE<<<<<{reset}\n");
-		// pivot = ft_choose_pivot(st, &lst, &size, state, fd);
 		pivot = (*st)->nb;
 		rotations = 0;
 		pushs = 0;
-		// if ((*st)->nb != pivot)
-		// {
-		// 	ft_stack_rotate(st);
-		// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 3 : 4));
-		// 	rotations++;
-		// 	size--;
-		// }
 		ft_push_stack(st, opp_st);
 		ft_stack_push_back(&lst->st_instruct, ft_stack_new((state == 0) ? 10 : 9));
 		size--;
 		pushs++;
 		while (ft_stack_ncmp(*st, pivot, ft_nb_is_lower, size))
 		{
-//essai implementation opti 3
-// if (state == 0 && (*st)->nb == min && (rotations == 0 || lst->sorted == 0))
-// {
-// 	ft_stack_rotate(st);
-// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
-// 	size--;
-// 	min = ft_stack_nmin(*st, size);
-// 	min_opp_st= ft_stack_min(*opp_st);
-// 	min = (min < min_opp_st) ? min : min_opp_st;
-// 	tmp = rotations;
-// 	rotations = 0;
-// 	lst->sorted = 1;
-// }
-// else if (state == -1 && (*st)->nb == min)
-// {
-// 	ft_push_stack(st, opp_st);
-// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(9));
-// 	ft_stack_rotate(opp_st);
-// 	ft_stack_push_back(&lst->st_instruct, ft_stack_new(3));
-// 	size--;
-// 	min = ft_stack_nmin(*st, size);
-// }
 			if ((*st)->nb < pivot)
 			{
 				ft_push_stack(st, opp_st);
@@ -576,10 +529,9 @@ min = ft_stack_nmin(*st, size);
 				size--;
 			}
 		}
-		size += (rotations + tmp);
+		size += rotations;
 		if (lst->sorted == 0)
 			lst->sorted = 1;
-		// if ((lst->sorted_a == 1 && state == 0) || (lst->sorted_b == 1 && state == -1))
 		else
 		{
 			while (rotations)
@@ -589,14 +541,6 @@ min = ft_stack_nmin(*st, size);
 				rotations--;
 			}
 		}
-		// if (lst->sorted_a == 0 && state == 0)
-		// 	lst->sorted_a = 1;
-		// else if (lst->sorted_b == 0 && state == -1)
-			// lst->sorted_b = 1;
-		// if (state == 0)
-		// {
-
-		// }
 		if (DEBUG)
 		{
 			ft_dprintf(fd, "STATE STACK A\n");
