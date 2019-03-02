@@ -1,20 +1,5 @@
 #include "../includes/push_swap.h"
 
-//useless now
-t_data	*init_data(unsigned int size)
-{
-	t_data	*new;
-
-	if (!(new = (t_data*)malloc(sizeof(*new))))
-		return (NULL);
-	new->size = size;
-	new->reste = 0;
-	new->state = -1;
-	new->depth = 0;
-	return (new);
-}
-///
-
 t_options	*init_options(void)
 {
 	t_options	*new;
@@ -45,8 +30,6 @@ t_st		*init_stacks(void)
 	new->st_instruct = NULL;
 	new->depth = 0;
 	new->sorted = 0;
-	// new->sorted_a = 0;
-	// new->sorted_b = 0;
 	return (new);
 }
 
