@@ -141,6 +141,8 @@ int					ft_stack_cmp(t_stack *head, int data_ref, int (*f)(int, int));
 int					ft_stack_ncmp(t_stack *head, int data_ref, int (*f)(int, int), unsigned int limit);
 long				ft_stack_sum(t_stack *head);
 long				ft_stack_nsum(t_stack *head, unsigned int limit);
+t_stack				*ft_stack_node_at(t_stack *head, unsigned int index);
+void				ft_stack_remove(t_stack **head, const unsigned int index);
 
 int					ft_isblank(int c);
 int					ft_iscntrl(int c);

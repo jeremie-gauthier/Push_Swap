@@ -22,11 +22,14 @@ static int	ft_main_stack_a(t_st *lst)
 		if (!(ft_swap_and_write(lst, 0)))
 			return (0);
 	}
-	while (i < 2)
+	if (lst->st_a->next->next)
 	{
-		if (!(ft_rotate_and_write(lst, 0)))
-			return (0);
-		i++;
+		while (i < 2)
+		{
+			if (!(ft_rotate_and_write(lst, 0)))
+				return (0);
+			i++;
+		}
 	}
 	return (1);
 }

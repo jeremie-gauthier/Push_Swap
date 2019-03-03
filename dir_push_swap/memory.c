@@ -42,6 +42,7 @@ t_st		*init_stacks(void)
 	new->st_instruct = NULL;
 	new->depth = 0;
 	new->sorted = 0;
+	new->sort_b = 0;
 	return (new);
 }
 

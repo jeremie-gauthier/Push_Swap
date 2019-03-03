@@ -55,7 +55,8 @@ SOURCES_P2	=	main.c	\
 				sort_size_three_empty2.c	\
 				sort_size_three_full.c	\
 				sort_size_three_full_a.c	\
-				sort_size_three_full_b.c
+				sort_size_three_full_b.c	\
+				ft_normalize_entries.c
 
 HDR		=	$(HDR_PATH)/push_swap.h
 

@@ -98,5 +98,7 @@ t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
 		return (NULL);
 	if (!(stack_a = ft_build_stack(argv)))
 		return (NULL);
+	if (!(stack_a = ft_normalize_entries(&stack_a)))
+		return (NULL);
 	return (stack_a);
 }
