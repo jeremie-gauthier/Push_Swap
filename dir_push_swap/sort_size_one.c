@@ -1,29 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_size_one.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jergauth <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/03 13:22:58 by jergauth          #+#    #+#             */
+/*   Updated: 2019/03/03 13:22:59 by jergauth         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-int     ft_sort_size_one(t_st *lst, int state)
+int		ft_sort_size_one(t_st *lst, int state)
 {
-	int		i;
+	int	i;
 
-    i = 0;
-    if (state == -1)
-    {
-        if (change_last_instruction(lst->st_instruct, 10, 3) == 1)
-        {
-            ft_push_stack(&lst->st_b, &lst->st_a);
-            ft_stack_rotate(&lst->st_a);
-        }
-        else
-        {
-            if (!(ft_push_stack_and_write(lst, -1)))
-                return (0);
-            if (!(ft_rotate_and_write(lst, 0)))
-                return (0);
-        }
-    }
-    else
-    {
-        if (!(ft_rotate_and_write(lst, 0)))
-            return (0);
-    }
-    return (1);
+	i = 0;
+	if (state == -1)
+	{
+		if (change_last_instruction(lst->st_instruct, 10, 3) == 1)
+		{
+			ft_push_stack(&lst->st_b, &lst->st_a);
+			ft_stack_rotate(&lst->st_a);
+		}
+		else
+		{
+			if (!(ft_push_stack_and_write(lst, -1)))
+				return (0);
+			if (!(ft_rotate_and_write(lst, 0)))
+				return (0);
+		}
+	}
+	else
+	{
+		if (!(ft_rotate_and_write(lst, 0)))
+			return (0);
+	}
+	return (1);
 }

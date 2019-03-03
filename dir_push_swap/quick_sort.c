@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quick_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jergauth <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/03 13:22:46 by jergauth          #+#    #+#             */
+/*   Updated: 2019/03/03 13:22:47 by jergauth         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-static int	ft_rev_rotate(t_st *lst, unsigned int rotations, int state)
+static int	ft_rev_rotate(t_st *lst, unsigned int rotations, const int state)
 {
 	if (lst->sorted == 0)
 		lst->sorted = 1;
@@ -16,14 +28,26 @@ static int	ft_rev_rotate(t_st *lst, unsigned int rotations, int state)
 	return (1);
 }
 
-static int	ft_split_stack(t_st *lst, unsigned int *size, int pivot, int state)
+static int	ft_split_again(t_st *lst, unsigned int rotations,
+					unsigned int pushs, int state)
+{
+	if (!(ft_rev_rotate(lst, rotations, state)))
+		return (0);
+	if (!(ft_quick_sort(lst, pushs, ~state)))
+		return (0);
+	return (1);
+}
+
+static int	ft_split_stack(t_st *lst, unsigned int *size,
+					const int pivot, int state)
 {
 	unsigned int	rotations;
 	unsigned int	pushs;
 
 	rotations = 0;
 	pushs = 1;
-	while (ft_stack_ncmp((state == 0) ? lst->st_a : lst->st_b, pivot, ft_nb_is_lower, *size))
+	while (ft_stack_ncmp((state == 0) ? lst->st_a : lst->st_b, pivot,
+				ft_nb_is_lower, *size))
 	{
 		if (((state == 0) ? lst->st_a : lst->st_b)->nb < pivot)
 		{
@@ -36,21 +60,17 @@ static int	ft_split_stack(t_st *lst, unsigned int *size, int pivot, int state)
 		{
 			if (!(ft_rotate_and_write(lst, state)))
 				return (0);
-			rotations++;
 			(*size)--;
+			rotations++;
 		}
 	}
 	*size += rotations;
-	if (!(ft_rev_rotate(lst, rotations, state)))
-		return (0);
-	if (!(ft_quick_sort(lst, pushs, ~state)))
-		return (0);
-	return (1);
+	return (ft_split_again(lst, rotations, pushs, state));
 }
 
-int		ft_quick_sort(t_st *lst, unsigned int size, int state)
+int			ft_quick_sort(t_st *lst, unsigned int size, int state)
 {
-	int				pivot;
+	int	pivot;
 
 	while (size > 3)
 	{

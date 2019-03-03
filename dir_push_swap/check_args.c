@@ -6,7 +6,7 @@
 /*   By: jergauth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:42:46 by jergauth          #+#    #+#             */
-/*   Updated: 2019/02/13 15:42:48 by jergauth         ###   ########.fr       */
+/*   Updated: 2019/03/03 13:21:20 by jergauth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int			ft_depack_args(char *args, t_stack **stack_a)
 	char	**tab;
 	size_t	len;
 	size_t	i;
- 
+
 	if (!(tab = ft_strsplit(args, ' ')))
 		return (0);
 	len = ft_arrlen((void*)tab);

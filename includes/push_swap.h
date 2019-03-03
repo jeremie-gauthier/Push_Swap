@@ -43,6 +43,9 @@ typedef struct	s_st
 	unsigned int	sorted	: 1;
 }				t_st;
 
+int				ft_safe_open(const char *pathname);
+int				ft_safe_close(const int fd, const char *pathname);
+
 t_options		*init_options(void);
 t_st			*init_stacks(void);
 void			st_del(t_st **lst);
@@ -64,9 +67,21 @@ int				ft_sort_deepest_stack(t_st *lst, unsigned int size, int state);
 int				change_last_instruction(t_stack *instr_set, int supposed_val, int new_val);
 
 int    			ft_sort_size_one(t_st *lst, int state);
-int     		ft_sort_size_one(t_st *lst, int state);
+int				ft_sort_size_two(t_st *lst, int state);
 int        		ft_sort_size_three_empty(t_st *lst, int state);
+int				ft_top_is_min(t_st *lst, unsigned int *size);
+int				ft_other_cases(t_st *lst, unsigned int *size);
+int				ft_mid_is_min(t_st *lst, unsigned int *size);
 int       	  	ft_sort_size_three_full(t_st *lst, int state);
+int				ft_top_is_min_full(t_st *lst);
+int				ft_top_is_median_value(t_st *lst);
+int				ft_bot_is_median_value(t_st *lst);
+int				ft_other_cases_full(t_st *lst);
+int				ft_mid_is_max_full_b(t_st *lst, unsigned int *size);
+int				ft_other_cases_full_b(t_st *lst, unsigned int *size);
+
+int				ft_print_instructions(t_st *lst);
+
 
 int	ft_sort_substack(t_stack **st, t_stack **opp_st, unsigned int size, int state, t_stack **instr_set);
 

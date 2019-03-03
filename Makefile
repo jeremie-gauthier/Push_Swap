@@ -29,6 +29,7 @@ DIR_O_P2	=	$(DIR_O)/tmp_push_swap
 SOURCES_P1	=	main.c	\
 				stack_operations.c	\
 				check_args.c	\
+				files_operations.c	\
 				read_stdin.c	\
 				execute_instructions.c	\
 				memory.c	\
@@ -38,9 +39,12 @@ SRCS_P1	=	$(addprefix $(CHKR_PATH)/,$(SOURCES_P1))
 OBJS_P1	=	$(addprefix $(DIR_O_P1)/,$(SOURCES_P1:.c=.o))
 
 SOURCES_P2	=	main.c	\
-				stack_operations.c	\
-				check_args.c	\
 				memory.c	\
+				files_operations.c	\
+				stack_operations.c	\
+				print_instructions.c \
+				ft_stack_append.c	\
+				check_args.c	\
 				quick_sort.c	\
 				insertion_sort.c	\
 				optimizer.c	\
@@ -48,7 +52,10 @@ SOURCES_P2	=	main.c	\
 				sort_size_one.c	\
 				sort_size_two.c	\
 				sort_size_three_empty.c	\
-				sort_size_three_full.c
+				sort_size_three_empty2.c	\
+				sort_size_three_full.c	\
+				sort_size_three_full_a.c	\
+				sort_size_three_full_b.c
 
 HDR		=	$(HDR_PATH)/push_swap.h
 

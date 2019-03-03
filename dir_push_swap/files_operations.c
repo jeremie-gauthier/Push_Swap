@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   optimizer.c                                        :+:      :+:    :+:   */
+/*   files_operations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jergauth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/03 13:22:40 by jergauth          #+#    #+#             */
-/*   Updated: 2019/03/03 13:22:41 by jergauth         ###   ########.fr       */
+/*   Created: 2019/03/03 13:29:23 by jergauth          #+#    #+#             */
+/*   Updated: 2019/03/03 13:29:24 by jergauth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	change_last_instruction(t_stack *instr_set, int supposed_val, int new_val)
+int		ft_safe_open(const char *pathname)
 {
-	t_stack	*current;
+	int		fd;
 
-	current = instr_set;
-	if (current)
+	if ((fd = open(pathname, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR)) < 0)
 	{
-		while (current->next)
-			current = current->next;
-		if (current->nb == supposed_val)
-		{
-			current->nb = new_val;
-			return (1);
-		}
+		ft_printf("{red}Fail to open {bold}%s{reset}{red}, \
+			write in stdout :{reset}\n", pathname);
+		return (1);
 	}
-	return (0);
+	return (fd);
+}
+
+int		ft_safe_close(const int fd, const char *pathname)
+{
+	if (close(fd) < 0)
+	{
+		ft_printf("{red}Fail to close {bold}%s{reset}\n", pathname);
+		return (-1);
+	}
+	return (1);
 }

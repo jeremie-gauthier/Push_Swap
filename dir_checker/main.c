@@ -26,9 +26,6 @@ int			main(int argc, char **argv)
 {
 	t_st		*lst;
 	int			ret;
-	// t_stack		*stack_a;
-	// t_stack		*instructions_set;
-	// t_options	*fl;
 
 	if (argc >= 2)
 	{
@@ -39,7 +36,6 @@ int			main(int argc, char **argv)
 			return (ft_clean_abort(&lst,  2, 1));
 		if (!(lst->st_a = ft_check_args_and_build_stack(lst->opt_fl, argv)))
 			return (ft_clean_abort(&lst, 1, 1));
-		// ft_stack_print(stack_a);
 		if (ft_stack_is_sort(lst->st_a, 0))
 			return (ft_clean_abort(&lst, 0, 0));
 		if (!(lst->st_instruct = ft_read_stdin(lst->opt_fl)))
