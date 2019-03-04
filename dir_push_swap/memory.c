@@ -16,7 +16,7 @@ t_options	*init_options(void)
 {
 	t_options	*new;
 
-	if (!(new = (t_options*)malloc(sizeof(new))))
+	if (!(new = (t_options*)malloc(sizeof(*new))))
 		return (NULL);
 	new->pathname = NULL;
 	new->counter = 0;
@@ -40,9 +40,7 @@ t_st		*init_stacks(void)
 	new->st_a = NULL;
 	new->st_b = NULL;
 	new->st_instruct = NULL;
-	new->depth = 0;
 	new->sorted = 0;
-	new->sort_b = 0;
 	return (new);
 }
 

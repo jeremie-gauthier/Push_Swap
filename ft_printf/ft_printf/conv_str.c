@@ -24,6 +24,7 @@ static char	*ft_conv_string(va_list ap)
 	char	*conv;
 
 	arg = va_arg(ap, char*);
+	conv = NULL;
 	if (arg == NULL)
 	{
 		if (!(conv = ft_strdup("(null)")))

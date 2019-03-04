@@ -12,14 +12,13 @@
 
 #include "../includes/push_swap.h"
 
-static void		*ft_clean_abort(t_stack **set, char *line)
+static int	ft_clean_abort(char **line)
 {
-	ft_stack_del(set);
-	ft_strdel(&line);
-	return (NULL);
+	ft_strdel(line);
+	return (0);
 }
 
-static int		ft_is_a_known_word(char *instruction)
+static int	ft_is_a_known_word(char *instruction)
 {
 	char	*white_list[INSTRUCTIONS_SET];
 	size_t	i;
@@ -45,32 +44,30 @@ static int		ft_is_a_known_word(char *instruction)
 	return (-1);
 }
 
-t_stack			*ft_read_stdin(t_options *opt)
+int			ft_read_stdin(t_st *lst)
 {
 	char	*line;
 	int		ret;
-	t_stack	*instructions_set;
 	t_stack	*new;
 	int		fd;
 
 	fd = 0;
-	if (opt->pathname != NULL)
+	if (lst->opt_fl->pathname != NULL)
 	{
-		if ((fd = ft_safe_open(opt->pathname)) == -1)
-			return (NULL);
+		if ((fd = ft_safe_open(lst->opt_fl->pathname)) == -1)
+			return (0);
 	}
-	instructions_set = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
 		if ((ret = ft_is_a_known_word(line)) == -1)
-			return (ft_clean_abort(&instructions_set, line));
+			return (ft_clean_abort(&line));
 		if (!(new = ft_stack_new(ret)))
-			return (ft_clean_abort(&instructions_set, line));
-		ft_stack_push_back(&instructions_set, new);
+			return (ft_clean_abort(&line));
+		ft_stack_push_back(&lst->st_instruct, new);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
-	if (ft_safe_close(fd, opt->pathname) == -1)
-		return (ft_clean_abort(&instructions_set, NULL));
-	return (instructions_set);
+	if (ft_safe_close(fd, lst->opt_fl->pathname) == -1)
+		return (0);
+	return (1);
 }

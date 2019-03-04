@@ -22,7 +22,7 @@ static int	clean_quit(char **conv, char **substr, int ret)
 static int	ft_conv_char_w_padding(t_flags *fl, t_buf *buf, char c)
 {
 	char	*conv;
-	char	*tmp;
+	void	*tmp;
 
 	if (!(conv = ft_memalloc(fl->pad - 1)))
 		return (0);
@@ -39,12 +39,13 @@ static int	ft_conv_char_w_padding(t_flags *fl, t_buf *buf, char c)
 		if (!(conv = ft_memjoin(&c, 1, (void*)conv, fl->pad - 1)))
 			return (clean_quit(&conv, NULL, 0));
 	}
-	ft_strdel(&tmp);
+	ft_memdel(&tmp);
 	tmp = buf->str;
 	if (!(buf->str = ft_memjoin(buf->str, buf->len, (void*)conv, fl->pad)))
 		return (clean_quit(&conv, NULL, 0));
 	buf->len += fl->pad;
-	ft_strdel(&tmp);
+	ft_memdel(&tmp);
+	ft_strdel(&conv);
 	return (1);
 }
 
@@ -93,6 +94,7 @@ static int	ft_putspaces_to_str(t_flags *fl, char **conv, int len, t_buf *buf)
 				return (clean_quit(NULL, &substr, 0));
 		}
 	}
+	ft_strdel(&substr);
 	if (!(buf->str = ft_memjoin_free(buf->str, buf->len, *conv,
 				(len_pad > 0) ? fl->pad : len)))
 		return (clean_quit(conv, NULL, 0));
@@ -102,6 +104,9 @@ static int	ft_putspaces_to_str(t_flags *fl, char **conv, int len, t_buf *buf)
 
 int			ft_format_str(t_flags *fl, char **conv, int len, t_buf *buf)
 {
+	char	*tmp;
+
+	tmp = *conv;
 	if (fl->prc != -1 && fl->prc < len)
 	{
 		if (!(ft_format_prc(fl, conv, &len)))
@@ -111,6 +116,7 @@ int			ft_format_str(t_flags *fl, char **conv, int len, t_buf *buf)
 	{
 		if (!(ft_putspaces_to_str(fl, conv, len, buf)))
 			return (0);
+		ft_strdel(&tmp);
 		return (1);
 	}
 	if (!(buf->str = ft_memjoin_free(buf->str, buf->len, *conv, len)))

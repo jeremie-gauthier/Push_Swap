@@ -39,9 +39,7 @@ typedef struct	s_st
 	t_stack			*st_b;
 	t_stack			*st_instruct;
 	t_options		*opt_fl;
-	unsigned int	depth	: 5;
-	unsigned int	sorted	: 1;
-	unsigned int	sort_b	: 1;
+	unsigned int	sorted;
 }				t_st;
 
 int				ft_safe_open(const char *pathname);
@@ -55,10 +53,9 @@ int				ft_push_stack_and_write(t_st *lst, int state);
 int				ft_rotate_and_write(t_st *lst, int state);
 int				ft_rev_rotate_and_write(t_st *lst, int state);
 int				ft_swap_and_write(t_st *lst, int state);
-t_stack			*ft_normalize_entries(t_stack **st);
 
-t_stack			*ft_check_args_and_build_stack(t_options *fl, char **argv);
-t_stack			*ft_read_stdin(t_options *opt);
+int				ft_check_args_and_build_stack(t_st *lst, char **argv);
+int				ft_read_stdin(t_st *lst);
 int				ft_start_instructions(t_st *lst);
 int				ft_dumb_sort(t_st *lst, unsigned int size);
 int				ft_quick_sort(t_st *lst, unsigned int size, int state);

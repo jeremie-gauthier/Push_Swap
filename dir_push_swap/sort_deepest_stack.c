@@ -27,7 +27,8 @@ static int	ft_size_three_case(t_st *lst, const int state)
 	return (1);
 }
 
-int			ft_sort_deepest_stack(t_st *lst, unsigned int size, const int state)
+int			ft_sort_deepest_stack(t_st *lst, const unsigned int size,
+						const int state)
 {
 	int		i;
 

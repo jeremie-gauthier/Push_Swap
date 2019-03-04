@@ -12,13 +12,13 @@
 
 #include "../includes/push_swap.h"
 
-static void			*ft_clean_abort(t_stack **head)
+static int	ft_clean_abort(char **tab, size_t len)
 {
-	ft_stack_del(head);
-	return (NULL);
+	ft_tabdel((void*)tab, len);
+	return (0);
 }
 
-static int			ft_check_args(char **argv)
+static int	ft_check_args(char **argv)
 {
 	size_t	i;
 
@@ -33,7 +33,7 @@ static int			ft_check_args(char **argv)
 	return (1);
 }
 
-static int			ft_depack_args(char *args, t_stack **stack_a)
+static int	ft_depack_args(char *args, t_stack **stack_a)
 {
 	char	**tab;
 	size_t	len;
@@ -46,23 +46,19 @@ static int			ft_depack_args(char *args, t_stack **stack_a)
 	while (i < len)
 	{
 		if (!(ft_check_args(tab)))
-		{
-			ft_tabdel((void*)tab, len);
-			return (0);
-		}
-		ft_stack_append(tab[i], stack_a);
+			return (ft_clean_abort(tab, len));
+		if (!(ft_stack_append(tab[i], stack_a)))
+			return (ft_clean_abort(tab, len));
 		i++;
 	}
 	ft_tabdel((void*)tab, len);
 	return (1);
 }
 
-static t_stack		*ft_build_stack(char **argv)
+static int	ft_build_stack(t_st *lst, char **argv)
 {
-	t_stack	*stack_a;
 	size_t	i;
 
-	stack_a = NULL;
 	i = 0;
 	while (argv[i])
 	{
@@ -70,35 +66,31 @@ static t_stack		*ft_build_stack(char **argv)
 			return (0);
 		if (ft_strchr(argv[i], ' ') != NULL)
 		{
-			if (!(ft_depack_args(argv[i], &stack_a)))
-				return (ft_clean_abort(&stack_a));
+			if (!(ft_depack_args(argv[i], &lst->st_a)))
+				return (0);
 		}
 		else
 		{
-			if (!(ft_stack_append(argv[i], &stack_a)))
-				return (ft_clean_abort(&stack_a));
+			if (!(ft_stack_append(argv[i], &lst->st_a)))
+				return (0);
 		}
 		i++;
 	}
-	return (stack_a);
+	return (1);
 }
 
-t_stack				*ft_check_args_and_build_stack(t_options *fl, char **argv)
+int			ft_check_args_and_build_stack(t_st *lst, char **argv)
 {
-	t_stack	*stack_a;
-
 	if (ft_strcmp(*argv, "-f") == 0)
 	{
 		argv++;
-		if (!(fl->pathname = ft_strdup(*argv)))
-			return (NULL);
+		if (!(lst->opt_fl->pathname = ft_strdup(*argv)))
+			return (0);
 		argv++;
 	}
 	if (!(ft_check_args(argv)))
-		return (NULL);
-	if (!(stack_a = ft_build_stack(argv)))
-		return (NULL);
-	if (!(stack_a = ft_normalize_entries(&stack_a)))
-		return (NULL);
-	return (stack_a);
+		return (0);
+	if (!(ft_build_stack(lst, argv)))
+		return (0);
+	return (1);
 }

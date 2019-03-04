@@ -82,9 +82,12 @@ int			ft_start_instructions(t_st *lst)
 	f[0] = &ft_stack_swap_top;
 	f[1] = &ft_stack_rotate;
 	f[2] = &ft_stack_rev_rotate;
-	if (lst->opt_fl->visu == 1)
-		ft_visualizer(lst, f);
-	else
-		ft_execute_instructions(lst, f);
+	if (lst->st_a)
+	{
+		if (lst->opt_fl->visu == 1)
+			ft_visualizer(lst, f);
+		else
+			ft_execute_instructions(lst, f);
+	}
 	return (ft_final_state_check(lst));
 }

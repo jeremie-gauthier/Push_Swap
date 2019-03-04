@@ -77,10 +77,9 @@ static int		print_in_file(const t_st *lst, const char *ret)
 {
 	int	fd;
 
-	if (!(fd = ft_safe_open(lst->opt_fl->pathname)))
-		return (0);
+	fd = ft_safe_open(lst->opt_fl->pathname);
 	ft_dprintf(fd, "%s", ret);
-	if (!(fd = ft_safe_close(fd, lst->opt_fl->pathname)))
+	if ((fd = ft_safe_close(fd, lst->opt_fl->pathname)) < 0)
 		return (0);
 	return (1);
 }
@@ -105,7 +104,7 @@ int				ft_print_instructions(t_st *lst)
 	ret[i] = '\0';
 	if (lst->opt_fl->pathname != NULL)
 	{
-		if (!print_in_file(lst, ret))
+		if (!(print_in_file(lst, ret)))
 			return (ft_clean_abort(&ret, 0));
 	}
 	else

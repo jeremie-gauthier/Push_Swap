@@ -14,32 +14,15 @@
 
 static int	ft_rev_rotate(t_st *lst, unsigned int rotations, const int state)
 {
-	if (state == 0)
-	{
-		if (lst->sorted == 0)
-			lst->sorted = 1;
-		else
-		{
-			while (rotations)
-			{
-				if (!(ft_rev_rotate_and_write(lst, state)))
-					return (0);
-				rotations--;
-			}
-		}
-	}
+	if (lst->sorted == 0)
+		lst->sorted = 1;
 	else
 	{
-		if (lst->sort_b == 0)
-			lst->sort_b = 1;
-		else if (lst->sort_b == 1 && lst->st_b != NULL)
+		while (rotations)
 		{
-			while (rotations)
-			{
-				if (!(ft_rev_rotate_and_write(lst, state)))
-					return (0);
-				rotations--;
-			}
+			if (!(ft_rev_rotate_and_write(lst, state)))
+				return (0);
+			rotations--;
 		}
 	}
 	return (1);
@@ -62,8 +45,7 @@ static int	ft_split_stack(t_st *lst, unsigned int *size,
 	unsigned int	pushs;
 
 	rotations = 0;
-	pushs = 1; // si pivot top
-	// pushs = 0; // si pivot mediane
+	pushs = 1;
 	while (ft_stack_ncmp((state == 0) ? lst->st_a : lst->st_b, pivot,
 				ft_nb_is_lower, *size))
 	{
@@ -86,7 +68,7 @@ static int	ft_split_stack(t_st *lst, unsigned int *size,
 	return (ft_split_again(lst, rotations, pushs, state));
 }
 
-int	ft_pivot_top(t_st *lst, unsigned int *size, const int state)
+static int	ft_pivot_top(t_st *lst, unsigned int *size, const int state)
 {
 	int	pivot;
 
@@ -97,14 +79,6 @@ int	ft_pivot_top(t_st *lst, unsigned int *size, const int state)
 	return (pivot);
 }
 
-int	ft_pivot_moyenne(t_st *lst, unsigned int size, const int state)
-{
-	int	mean;
-
-	mean = ft_stack_nsum(((state == 0) ? lst->st_a : lst->st_b), size) / size;
-	return (mean);
-}
-
 int			ft_quick_sort(t_st *lst, unsigned int size, int state)
 {
 	int	pivot;
@@ -112,13 +86,8 @@ int			ft_quick_sort(t_st *lst, unsigned int size, int state)
 	while (size > 3)
 	{
 		pivot = ft_pivot_top(lst, &size, state);
-		// pivot = ft_pivot_moyenne(lst, size, state);
-			// ft_printf("mean = %i\nsize = %u\nSTACK\n", pivot, size);
-			// ft_stack_print((state == 0) ? lst->st_a : lst->st_b); //
 		if (!(ft_split_stack(lst, &size, pivot, state)))
 			return (0);
-			// ft_print_instructions(lst);
-			// usleep(2000000);
 	}
 	ft_sort_deepest_stack(lst, size, state);
 	return (1);
