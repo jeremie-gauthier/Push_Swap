@@ -25,7 +25,8 @@ static int	ft_final_state_check(t_st *lst)
 		return (0);
 	}
 	if (lst->opt_fl->count == 1)
-		ft_printf("{green}Moves : %i{reset}\n", ft_stack_size(lst->st_instruct));
+		ft_printf("{green}Moves : %i{reset}\n",
+				ft_stack_size(lst->st_instruct));
 	write(1, "OK\n", 3);
 	return (1);
 }
@@ -47,30 +48,27 @@ static int	ft_final_state_check(t_st *lst)
 
 static void	ft_execute_instructions(t_st *lst, void (*f[3])(t_stack**))
 {
-	t_stack	*set;
-
-	set = lst->st_instruct;
-	if (f && set && lst->st_a)
+	if (f && lst->st_a && lst->st_instruct)
 	{
-		while (set)
+		while (lst->st_instruct)
 		{
-			if (set->nb == 9)
+			if (lst->st_instruct->nb == 9)
 				ft_push_stack(&lst->st_b, &lst->st_a);
-			else if (set->nb == 10)
+			else if (lst->st_instruct->nb == 10)
 				ft_push_stack(&lst->st_a, &lst->st_b);
 			else
 			{
-				if (set->nb % 3 == 0)
-					f[set->nb / 3](&lst->st_a);
-				else if (set->nb % 3 == 1)
-					f[set->nb / 3](&lst->st_b);
+				if (lst->st_instruct->nb % 3 == 0)
+					f[lst->st_instruct->nb / 3](&lst->st_a);
+				else if (lst->st_instruct->nb % 3 == 1)
+					f[lst->st_instruct->nb / 3](&lst->st_b);
 				else
 				{
-					f[set->nb / 3](&lst->st_a);
-					f[set->nb / 3](&lst->st_b);
+					f[lst->st_instruct->nb / 3](&lst->st_a);
+					f[lst->st_instruct->nb / 3](&lst->st_b);
 				}
 			}
-			set = set->next;
+			lst->st_instruct = lst->st_instruct->next;
 		}
 	}
 }
@@ -78,16 +76,19 @@ static void	ft_execute_instructions(t_st *lst, void (*f[3])(t_stack**))
 int			ft_start_instructions(t_st *lst)
 {
 	void	(*f[3])(t_stack**);
+	t_stack	*set;
 
 	f[0] = &ft_stack_swap_top;
 	f[1] = &ft_stack_rotate;
 	f[2] = &ft_stack_rev_rotate;
 	if (lst->st_a)
 	{
+		set = lst->st_instruct;
 		if (lst->opt_fl->visu == 1)
 			ft_visualizer(lst, f);
 		else
 			ft_execute_instructions(lst, f);
+		lst->st_instruct = set;
 	}
 	return (ft_final_state_check(lst));
 }

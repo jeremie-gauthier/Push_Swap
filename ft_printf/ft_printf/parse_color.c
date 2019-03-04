@@ -6,7 +6,7 @@
 /*   By: jergauth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 19:08:35 by jergauth          #+#    #+#             */
-/*   Updated: 2019/01/24 19:08:36 by jergauth         ###   ########.fr       */
+/*   Updated: 2019/03/04 19:24:57 by jergauth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char		*get_ansi_bg_color_code(char *color)
 	if (ft_strcasecmp(color, "BG_CYAN") == 0)
 		return (BG_CYAN);
 	if (ft_strcasecmp(color, "CLEAR") == 0)
-		return (CLEAR);	
+		return (CLEAR);
 	if (ft_strcasecmp(color, "RESET") == 0)
 		return (RESET);
 	return (NULL);

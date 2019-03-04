@@ -48,7 +48,6 @@
 # define BG_CYAN	"\033[46m"
 # define CLEAR		"\e[1;1H\e[2J"
 
-
 typedef struct	s_buf
 {
 	void			*str;

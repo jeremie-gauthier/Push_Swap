@@ -6,13 +6,14 @@
 /*   By: jergauth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 22:30:15 by jergauth          #+#    #+#             */
-/*   Updated: 2019/02/22 22:30:17 by jergauth         ###   ########.fr       */
+/*   Updated: 2019/03/04 19:24:15 by jergauth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_stack_ncmp(t_stack *head, int data_ref, int (*f)(int, int), unsigned int limit)
+int		ft_stack_ncmp(t_stack *head, int data_ref, int (*f)(int, int),
+				unsigned int limit)
 {
 	unsigned int	i;
 

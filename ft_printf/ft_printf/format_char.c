@@ -41,21 +41,18 @@ static int	ft_conv_char_w_padding(t_flags *fl, t_buf *buf, char c)
 	}
 	ft_memdel(&tmp);
 	tmp = buf->str;
-	if (!(buf->str = ft_memjoin(buf->str, buf->len, (void*)conv, fl->pad)))
+	if (!(buf->str = ft_memjoin_free(buf->str, buf->len, (void*)conv, fl->pad)))
 		return (clean_quit(&conv, NULL, 0));
 	buf->len += fl->pad;
 	ft_memdel(&tmp);
-	ft_strdel(&conv);
 	return (1);
 }
 
 int			ft_format_char(t_flags *fl, t_buf *buf, unsigned char c)
 {
 	char	*tmp;
-	char	*conv;
 
 	tmp = NULL;
-	conv = NULL;
 	if (fl->pad > 1)
 	{
 		if (!(ft_conv_char_w_padding(fl, buf, c)))
@@ -85,16 +82,15 @@ static int	ft_putspaces_to_str(t_flags *fl, char **conv, int len, t_buf *buf)
 				(fl->mo == 0 && fl->f0 == 1) ? '0' : ' ', len_pad);
 		if (fl->mo == 1)
 		{
-			if (!(*conv = ft_memjoin(*conv, len, substr, len_pad)))
+			if (!(*conv = ft_memjoin_free(*conv, len, substr, len_pad)))
 				return (clean_quit(NULL, &substr, 0));
 		}
 		else
 		{
-			if (!(*conv = ft_memjoin(substr, len_pad, *conv, len)))
+			if (!(*conv = ft_memjoin_free(substr, len_pad, *conv, len)))
 				return (clean_quit(NULL, &substr, 0));
 		}
 	}
-	ft_strdel(&substr);
 	if (!(buf->str = ft_memjoin_free(buf->str, buf->len, *conv,
 				(len_pad > 0) ? fl->pad : len)))
 		return (clean_quit(conv, NULL, 0));

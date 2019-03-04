@@ -38,7 +38,7 @@ static int	ft_depack_args(char *args, t_stack **stack_a)
 	char	**tab;
 	size_t	len;
 	size_t	i;
- 
+
 	if (!(tab = ft_strsplit(args, ' ')))
 		return (0);
 	len = ft_arrlen((void*)tab);
@@ -81,34 +81,8 @@ static int	ft_build_stack(t_st *lst, char **argv)
 
 int			ft_check_args_and_build_stack(t_st *lst, char **argv)
 {
-	while (!ft_strcmp(*argv, "-v") || !ft_strcmp(*argv, "-t") || !ft_strcmp(*argv, "-l") || !ft_strcmp(*argv, "-f"))
-	{
-		if (ft_strcmp(*argv, "-v") == 0)
-		{
-			lst->opt_fl->visu = 1;
-			argv++;
-		}
-		if (ft_strcmp(*argv, "-t") == 0)
-		{
-			argv++;
-			lst->opt_fl->time = ft_atoi(*argv);
-			if (lst->opt_fl->time > 5000)
-				lst->opt_fl->time = 5000;
-			argv++;
-		}
-		if (ft_strcmp(*argv, "-l") == 0)
-		{
-			lst->opt_fl->count = 1;
-			argv++;
-		}
-		if (ft_strcmp(*argv, "-f") == 0)
-		{
-			argv++;
-			if (!(lst->opt_fl->pathname = ft_strdup(*argv)))
-				return (0);
-			argv++;
-		}
-	}
+	if (!(ft_parse_options(lst, &argv)))
+		return (0);
 	if (!(ft_check_args(argv)))
 		return (0);
 	if (!(ft_build_stack(lst, argv)))

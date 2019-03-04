@@ -28,7 +28,8 @@ static int	ft_select_algo(t_st *lst, const unsigned int size)
 {
 	if (size > 3 && size < 6)
 	{
-		if (!(ft_insertion_sort(lst, size)))
+		if (!(ft_insertion_sort(lst, size, ft_stack_nmin(lst->st_a, size),
+				ft_stack_nmax(lst->st_a, size))))
 			return (0);
 	}
 	else

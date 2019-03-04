@@ -136,9 +136,12 @@ int					ft_stack_at(t_stack *head, unsigned int index);
 unsigned int		ft_stack_size(t_stack *head);
 t_stack				*ft_stack_duplicate(t_stack *origin);
 int					ft_stack_is_sort(t_stack *head, int rev);
-int					ft_stack_is_nsort(t_stack *head, unsigned int limit, int rev);
-int					ft_stack_cmp(t_stack *head, int data_ref, int (*f)(int, int));
-int					ft_stack_ncmp(t_stack *head, int data_ref, int (*f)(int, int), unsigned int limit);
+int					ft_stack_is_nsort(t_stack *head, unsigned int limit,
+						int rev);
+int					ft_stack_cmp(t_stack *head, int data_ref,
+						int (*f)(int, int));
+int					ft_stack_ncmp(t_stack *head, int data_ref,
+						int (*f)(int, int), unsigned int limit);
 long				ft_stack_sum(t_stack *head);
 long				ft_stack_nsum(t_stack *head, unsigned int limit);
 t_stack				*ft_stack_node_at(t_stack *head, unsigned int index);
@@ -203,6 +206,5 @@ char				*ft_dtoa_concat(char *s, long l, int sign);
 char				*ft_ldtoa_concat(char *s, long long l, int sign);
 size_t				ft_arrlen(void **arr);
 int					ft_nb_is_lower(int nb, int ref);
-
 
 #endif
